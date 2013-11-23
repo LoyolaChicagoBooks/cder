@@ -1,0 +1,8 @@
+syntax: glob
+
+Thumbs.db
+.DS_Store
+obj/
+build/
+examples/
+*~
