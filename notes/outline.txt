@@ -1,0 +1,72 @@
+﻿NSF/TCPP CDER 2013 PDC Book Project: 
+Event- and Thread-based Concurrency in User-Centric Software
+Konstantin Läufer and George K. Thiruvathukal
+Department of Computer Science, Loyola University Chicago, {gkt,laufer}@cs.luc.edu
+Keywords (PDC Topics)
+Algorithmic topics: Search (A)
+Parallel programming paradigms and notations: Task/thread spawning (A)
+Semantics and correctness issues: Tasks and threads (C)
+Semantics and correctness issues: Synchronization (A)
+Semantics and correctness issues: Concurrency defects: Deadlock (C)
+Semantics and correctness issues: Concurrency defects: Data races (C)
+High-level themes: Why and what is parallel/distributed computing? (C)
+Cross-cutting topics: Concurrency (A)
+Current/advanced topics: Web services (C)
+Current/advanced topics: Pervasive and mobile computing (C)
+Introduction
+We propose a chapter that describes how we teach parallel and distributed computing topics from a user-centric software development angle, focusing on concurrency. Topics include batch versus event-driven execution (and scheduling), external and internal events, the event-action paradigm, state machines, background tasks, offloading computation (say, from a mobile device to the cloud[1] or computing cluster) and observing the resulting throughput-latency tradeoff. 
+
+
+While our focus will be on user-centric computing, we note that in today’s context, most mobile platforms are essentially shared-memory multiprocessor parallel systems in their own right. Today’s smartphones and tablets sport multicore architecture, and even the Parallela kickstarter project[2] is a sign that mobile platforms may well be the next wave of low-power parallel computing. Therefore, we view teaching to user-centric platforms/devices not only as an effective way to learn parallel computing but also a fun way to do so that will be compelling to a diverse student population.
+Outline of Topics
+The following is the proposed outline of topics along with Bloom levels of learning in the cognitive domain (Know, Comprehend, Apply) and targeted core courses: CS1, CS2, and IOOD (our intermediate object-oriented software design course, which follows CS2 and complements CS3 and CS7 and is required for our computer science and software engineering majors). Each section, when covered fully as part of IOOD, corresponds approximately to a 4.5-hour module (one and a half weeks or 10% of a 15-week semester).
+Section 1: Basic Event-Based User Interaction
+* Introduction to Android framework (CS2: K, IOOD: C)
+* Section example: click counter (both console (CS1) and Android-based (CS2/IOOD)) (C)
+* Interacting with the user in console applications (CS1: A)
+* Interacting with the user in applications with a graphical interface (GUI) (CS2: A)
+* Understanding user interaction as events
+   * GUI widgets as event sources (CS2: C)
+   * Event listeners and the Observer pattern (IOOD: A)
+
+
+Section 2: Interactive Behaviors and Implicit Concurrency with Internal Timers
+* Section example: countdown timer (both console (CS1) and Android-based (CS2/IOOD)) (C)
+* Internal timers as event sources (CS1/CS2: C, IOOD: A)
+* Timeout events (CS1/CS2: C, IOOD: A)
+* Recurring timers (CS1/CS2: C, IOOD: A)
+* Modeling the application behavior with UML State Machine diagrams (IOOD: A)
+* Structuring interactive applications (IOOD: A)
+   * Model-View-Adapter (MVA) architecture
+   * Façade pattern
+   * Testability (CS2: C, IOOD: A)
+Section 3: Explicit Concurrency with Background Activities
+* Section example: microwave oven (both console (CS1) and Android-based (CS2/IOOD)) (C)
+* How do we keep applications responsive to user input? (CS1/CS2: K, IOOD: A)
+* Background tasks using (CS2: C, IOOD: A)
+   * recurring timers
+   * explicit threads (discouraged) and pooled execution
+   * Android AsyncTasks
+   * Scala actors (and how pooling affects their execution/scheduling) (IOOD: K)
+* Tracking an activity’s progress and completion (CS1: K, CS2: C, IOOD: A)
+* Canceling an activity (CS1: K, CS2: C, IOOD: A)
+* Caveats of error handling and error propagation from asynchronous tasks (CS2: K, IOOD: C)
+* I/O-bound activities versus CPU-bound activities: file download versus prime checking (CS2: K, IOOD: C)
+* Why are the GUIs themselves single-threaded? Reactor pattern (CS2: K, IOOD: C)
+Section 4: Client-side Concurrency in Distributed Applications
+* Usefulness of client-side concurrency in various situations: (CS1: K, CS2: C, IOOD: A)
+   * Keeping the GUI responsive while waiting for the service’s response
+   * Minimizing the latency by invoking multiple requests concurrently
+* Implementation of network tasks as background activities (CS2: K, IOOD: C)
+* Command-line example: concurrent download manager (CS2: K, IOOD: C)
+* Mobile example: mashup of several CPU-bound remote services (CS2: K, IOOD: A)
+* The increasingly widespread mobile + cloud architecture and the tradeoff between latency and throughput (CS2: K, IOOD: C)
+Usability
+Our focus on user-centric computing and the platforms that are typically associated it rather uniquely positions us in this respect. The bar of entry for typical parallel/distributed computing platforms is relatively steep. At the time of writing, the ability to develop serious user-centric concurrent/parallel/distributed software is getting easier with robust projects like Android Studio, where many of these ideas can be developed, tested, and deployed in an environment appropriate for virtually all curricular levels.
+Completeness
+Both authors have extensive experience teaching and publishing on concurrent, parallel, and distributed computing. We are still relatively early, however, in the user-centric computing space. We therefore have limited our focus to topics where we know there is a clear impact on user-centric computing. That is, this chapter will not include every known abstraction from concurrent or event-based computing (e.g. use of temporal logic?) but some of these topics may be added as we get into the actual writing of the chapter and gain more experience with them in actual courses.
+Adaptability
+Topics taught can be adapted across core courses and with respect to Bloom’s levels of learning, as illustrated above in the proposed outline of topics. In addition, our topics are highly adaptable because they truly do not depend on any language or platform. Android is an appropriate vehicle but by no means the only one.
+________________
+[1] Jason H. Christensen. 2009. Using RESTful web-services and cloud computing to create next generation mobile applications. In Proc. OOPSLA '09. ACM, New York, NY, USA, 627-634. DOI=10.1145/1639950.1639958.
+[2] http://www.kickstarter.com/projects/adapteva/parallella-a-supercomputer-for-everyone
