@@ -111,6 +111,9 @@ html_theme_options = {
     # be in the form [(name, page), ..]
     'navbar_links': [('Index', 'genindex')],
 
+    # for prev/next chevrons
+    'navbar_sidebarrel': True,
+
     # Include hidden TOCs in Site navbar?
     #
     # Note: If this is "false", you cannot have mixed ``:hidden:`` and
@@ -138,9 +141,9 @@ html_theme_options = {
     # such as "amelia" or "cosmo".
     #
     # Note that this is served off CDN, so won't be available offline.
-    'bootswatch_theme': "united",
+    'bootswatch_theme': "lumen",
 
-    'bootstrap_version' : "2"
+    'bootstrap_version' : "3"
 
 }
 

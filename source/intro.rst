@@ -1,3 +1,6 @@
+Introduction
+=================
+
 In this chapter, we study parallel and distributed computing topics
 from a user-centric software development angle, focusing on
 concurrency. Topics include batch versus event-driven execution (and
