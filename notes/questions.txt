@@ -1,0 +1,3 @@
+- BibTeX integration
+
+- labels and cross-references to, say, figures

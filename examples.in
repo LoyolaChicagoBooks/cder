@@ -6,6 +6,5 @@
 #
 
 # Actual CDER/COMP 313 Examples
+hg,clickcounter-android-java,https://bitbucket.org/loyolachicagocs_comp313/clickcounter-android-java
 hg,stopwatch-android-java,https://bitbucket.org/loyolachicagocs_comp313/stopwatch-android-java
-hg,integration,https://bitbucket.org/loyolachicagocs_plsystems/integration-scala
-git,hello-scala-eclipse,https://github.com/oop-cs-luc-edu/hello-scala-eclipse.git
