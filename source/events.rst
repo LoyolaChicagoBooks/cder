@@ -1,8 +1,24 @@
 Basic Event-Based User Interaction
 ==================================
 
-In this section, we'll study a simple interactive behavior and how
-this maps to an implementation based on the Android mobile application
+Learning objectives
+-------------------
+
+* Introduction to the Android framework (CS2: K, IOOD: C)
+* User interaction in console applications (CS1: A)
+* User interaction in applications with a graphical interface (GUI) (CS2: A)
+* Modeling simple behaviors with UML State Machine diagrams (IOOD: C) 
+* Understanding user interaction as events
+   * GUI widgets as event sources (CS2: C)
+   * Event listeners and the Observer pattern (IOOD: A)
+* The Model-View-Adapter architectural pattern (IOOD: A)
+* Testing interactive applications (IOOD: A)
+
+Introduction
+------------
+
+In this section, we'll start with a simple interactive behavior and
+explore how to implement this using the Android mobile application
 development framework. Our running example will be a bounded click
 counter application that can be used to keep track of the capacity of,
 say, a movie theater.
@@ -17,7 +33,7 @@ bounded counter.
 
 .. math::
 
-  min <= counter <= max
+   min \leq counter \leq max
 
 We can represent this abstraction as a simple, passive object with,
 say, the following interface:
@@ -45,7 +61,7 @@ use by building an interactive application on top of it.
 The interactive behavior of a click counter device
 --------------------------------------------------
 
-Next, let's imagine a device based on top of this bounded counter
+Next, let's imagine a device that realizes this bounded counter
 concept. For example, a bouncer positioned at the door of a movie
 theater to prevent overcrowding, could benefit from such a device with
 the following behavior:
@@ -135,8 +151,8 @@ in a meaningful way, such that the interface uses the abstraction to
 provide the required behavior. In this section, we'll work on bridging
 this gap.
 
-Revisiting the interactive behavior
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Modeling the interactive behavior
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As a first step, let's abstract away the concrete aspects of the user
 interface: 
@@ -168,22 +184,31 @@ to support a single reset transition back to the minimum state.
 
    The finite state machine of the bounded counter model.
 
-**TODO** junction for initial and reset with action counter = min
-
 As you can see, the three model states map directly to the view states
 from the previous subsection, and the transitions enabled in each
 model state map to the buttons enabled in each view state.
 
-
-
 GUI widgets as event sources
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The two figures show the GUI increment button selected in the Android
+Studio view component editor and the corresponding hierarchical tree
+view, respectively. 
+
+Our next step is to bring the app to life by connecting the visual
+interface with the interactive behavior. For example, when pressing
+the increment button in a non-full counter state, we expect the
+displayed value to go up by one. In general, the user can trigger
+certain events by interacting with view components and other event
+sources. For example, one can press a button, swiping one's finger
+across the screen, rotate the device, etc.
 
 .. figure:: images/AndroidStudioGUIEditor.png
    :alt: Android Studio GUI editor
    :scale: 50%
 
-   The visual interface of the application in the Android Studio GUI editor.
+   The visual interface of the application in the Android Studio view  
+   component editor with the increment button selected.  
 
 .. figure:: images/ComponentTree.png
    :alt: Click Counter View Component Tree
@@ -195,13 +220,25 @@ GUI widgets as event sources
 Event listeners and the Observer pattern
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. figure:: images/AndroidStudioButtonProperties.png
-   :alt: Android Studio view component editor
+We now discuss what an event is and what happens after it gets
+triggered. We will continue focusing on our running example of
+pressing the increment button.
+
+This figure shows the selected increment button in the view component
+property editor. Most importantly, the ``onClick`` event, which occurs
+when the user presses this button, maps to invocations of the
+``onIncrement`` method in the associated activity instance.
+
+.. figure:: images/AndroidStudioButtonProperties.png  
+   :alt: Android Studio view component editor  
    :scale: 50%
 
    The increment button in the Android Studio view component editor.
-
-asdf
+ 
+The visual representation of an Android GUI is generated from an XML
+source. For example, the source element for our increment button looks
+like this. It textually maps the ``onClick`` attribute to the
+``onIncrement`` method in the associated activity instance. 
 
 .. code-block:: xml
    :linenos:
@@ -214,19 +251,73 @@ asdf
         android:onClick="onIncrement"
         android:text="@string/label_increment" />
 
-asdf asdf
+The association with an instance of a particular activity class is
+declared separately in the app's *Android manifest*. The top-level
+``manifest`` element specifies the Java package of the activity class,
+and the ``activity`` element on line 5 specifies the name of the
+activity class, ``ClickCounterActivity``.
 
-asdf
+.. code-block:: xml
+   :linenos:
+   :emphasize-lines: 5
+
+   <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+       package="edu.luc.etl.cs313.android.clickcounter" ...>
+       ...
+       <application ...>
+           <activity android:name=".ClickCounterActivity" ...>
+               <intent-filter>
+                   <action android:name="android.intent.action.MAIN" />
+                   <category android:name="android.intent.category.LAUNCHER" />
+               </intent-filter>
+           </activity>
+       </application>
+   </manifest>
+
+So an *event* is just an invocation of an *event listener* method,
+possibly with an argument describing the event. We first need to
+establish the association between an event source and one (or possibly
+several) event listener(s) by *subscribing* the listener to the
+source. Once we do that, every time this source emits an event,
+normally triggered by the user, the appropriate event listener method
+gets called on each subscribed listener.
+
+Unlike ordinary method invocations, where the caller knows the
+identity of the callee, the (observable) event source provides a
+general mechanism for subscribing a listener to a source. This
+technique is widely known as the *Observer* design pattern.
  
-asdf
+Many GUI frameworks follow this approach. In Android, for example, the
+general component superclass is ``View``, and there are various types
+of listener interfaces, including ``OnClickListener``.
 
-.. figure:: images/ModelViewAdapter.png
-   :alt: Model-View-Adapter Architecture
-   :scale: 100%
+.. code-block:: java
+   :linenos:
 
-   The Model-View-Adapter (MVA) architecture of the bounded click
-   counter Android app.
+   public class View {
+       ...
+       public static interface OnClickListener {
+           public void onClick(View source);
+       }
+       public void setOnClickListener(final OnClickListener listener) { ... }
+       ...
+   }
 
+
+Application architecture
+------------------------
+
+The Android activity is responsible for mediating between the view
+components and the POJO bounded counter model we saw above. The full
+cycle of each event-based interaction goes like this. By pressing the
+increment button, the user triggers the ``onClick`` event on that
+button, and the ``onIncrement`` method gets called. This method
+interacts with the model instance by invoking the ``increment`` method
+and then requests a view update. The corresponding ``updateView``
+method also interacts with the model instance by retrieving the
+current counter value using the ``get`` method, displays this value in
+the corresponding GUI element with unique ID ``textview_value``, and
+finally updates the view states as necessary.
 
 .. literalinclude:: ../examples/clickcounter-android-java/ClickCounter/src/main/java/edu/luc/etl/cs313/android/clickcounter/ClickCounterActivity.java
    :start-after: begin-method-onIncrement
@@ -240,8 +331,120 @@ asdf
    :language: java 
    :linenos:
 
+This overall architecture is known as *model-view-adapter (MVA)*,
+where the adapter component mediates all interactions between the view
+and the model. (By contrast, the *model-view-controller (MVC)*
+architecture has a triangular shape and allows the model to update the
+view(s) directly via update events.) The figure below illustrates this
+architecture. The solid arrows represent ordinary method invocations,
+and the dashed arrow represents event-based interaction. View and
+adapter play the roles of observable and observer, respectively, in
+the Observer pattern that describes the top half of this architecture.
+
+.. figure:: images/ModelViewAdapter.png
+   :alt: Model-View-Adapter Architecture
+   :scale: 100%
+
+   The Model-View-Adapter (MVA) architecture of the bounded click
+   counter Android app. Solid arrows represent method invocation, and
+   dashed arrows represent event flow.
 
 
-Reference: https://www.palantir.com/2009/04/model-view-adapter/
+Testing GUI applications
+------------------------
 
-asdf
+Testing of GUI applications is a broad and important topic that goes
+beyond the scope of this chapter. Here, we complete our running
+example by focus on a few key techniques.
+
+At the beginning of this section, we already saw an example of a
+simple test method for the POJO bounded counter model. Because Android
+view components support triggering events programmatically, we can
+write system-level test methods that mimic the way a human user would
+interact with the application.
+
+The following test handles a simple scenario of pressing the reset
+button, verifying that we are in the minimum view state, then pressing
+the increment button, verifying that the value has gone up and we are
+in the counting state, pressing the reset button again, and finally
+verifying that we are back in the minimum state.
+
+.. literalinclude:: ../examples/clickcounter-android-java/ClickCounter/src/main/java/edu/luc/etl/cs313/android/clickcounter/AbstractClickCounterActivityTest.java 
+   :start-after: begin-method-testActivityScenarioIncReset
+   :end-before: end-method-testActivityScenarioIncReset
+   :language: java 
+   :linenos:
+
+The next test ensures that the visible application state is preserved
+under device rotation. This is an important and effective test because
+an Android application undergoes its entire lifecycle under rotation.
+
+.. literalinclude:: ../examples/clickcounter-android-java/ClickCounter/src/main/java/edu/luc/etl/cs313/android/clickcounter/AbstractClickCounterActivityTest.java 
+   :start-after: begin-method-testActivityScenarioRotation
+   :end-before: end-method-testActivityScenarioRotation
+   :language: java 
+   :linenos:
+
+Having a modular architecture, such as model-view-adapter, enables us
+to test some of the application components in isolation. Our simple
+unit tests for the POJO bounded counter model still work in the
+context of the overall Android app.
+
+The test code itself can benefit from the use of certain design
+patterns. For example, we have two choice for testing our app: 
+
+- Testing on an actual Android phone or tablet emulator (or physical
+  device) requires deploying the application under test and the test
+  code to the emulator and tends to be quite slow.
+
+- Testing on the development workstation using a test framework such
+  as *Robolectric* that simulates an Android runtime environment tends
+  to be considerably faster.
+
+Typically, we will want to run the exact same tests in both ways,
+starting with the simulated environment and occasionally targeting the
+emulator or device. An effective way to structure our test code for
+this purpose is the xUnit pattern *Testcase Superclass*. As the
+pattern name suggests, we pull up the common test code into an
+abstract superclass, and each of the two concrete test classes
+inherits the common code and runs it in the desired environment.
+
+.. code-block:: java
+   :linenos:
+
+   @RunWith(RobolectricTestRunner.class)
+   public class ClickCounterActivityRobolectric extends AbstractClickCounterActivityTest {
+       // some minimal Robolectric-specific code
+   }
+
+The official Android test support, however, requires inheriting from a
+specific superclass called ``ActivityInstrumentationTestCase2``. This
+class now takes up the only superclass slot, so we cannot use the
+Testcase Superclass pattern literally. Instead, we need to approximate
+inheriting from our ``AbstractClickCounterActivityTest`` using
+delegation to a subobject. This gets the job done but can get quite
+tedious when a lot of test methods are involved.
+
+.. code-block:: java
+   :linenos:
+
+   public class ClickCounterActivityTest 
+     extends ActivityInstrumentationTestCase2<ClickCounterActivity> {
+       ...
+       // test subclass instance to delegate to
+       private AbstractClickCounterActivityTest actualTest;
+
+       @UiThreadTest
+       public void testActivityScenarioIncReset() {
+	   actualTest.testActivityScenarioIncReset();
+       }
+       ...
+   }
+
+
+References: 
+
+- https://www.palantir.com/2009/04/model-view-adapter/
+- https://bitbucket.org/loyolachicagocs_comp313/clickcounter-android-java 
+- http://xunitpatterns.com/
+

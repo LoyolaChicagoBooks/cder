@@ -8,3 +8,4 @@
 # Actual CDER/COMP 313 Examples
 hg,clickcounter-android-java,https://bitbucket.org/loyolachicagocs_comp313/clickcounter-android-java
 hg,stopwatch-android-java,https://bitbucket.org/loyolachicagocs_comp313/stopwatch-android-java
+hg,timer-android-java,ssh://hg@bitbucket.org/aredovan1/cs313f13team6p4

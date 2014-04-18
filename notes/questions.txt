@@ -1,3 +1,5 @@
 - BibTeX integration
 
 - labels and cross-references to, say, figures
+
+- math: proper greater-than-and-equal/less-than-and-equal?

@@ -11,9 +11,10 @@ Welcome to SphinxBootstrapExemplar's documentation!
 
    intro
    events
-..   timers
+   timers
 ..   activities
 ..   distributed
+
 
 Indices and tables
 ==================
