@@ -61,6 +61,20 @@ asdf
 
 asfd
 
+explain the two types of timers
+
+- timeout - stopped state 
+- recurring - running state
+
+need sequence diagrams explaining both of these
+
+
+explain possibility of custom app-specific events
+
+explain JavaBeans event source/listener patterns
+
+
+
 **TODO** code examples
 
 - listener interfaces
