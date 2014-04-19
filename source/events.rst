@@ -289,7 +289,9 @@ technique is widely known as the *Observer* design pattern.
  
 Many GUI frameworks follow this approach. In Android, for example, the
 general component superclass is ``View``, and there are various types
-of listener interfaces, including ``OnClickListener``.
+of listener interfaces, including ``OnClickListener``. In following
+the *Dependency Inversion Principle (DIP)* [REF], the ``View`` class
+owns the interfaces its listeners must implement.
 
 .. code-block:: java
    :linenos:
@@ -303,9 +305,8 @@ of listener interfaces, including ``OnClickListener``.
        ...
    }
 
-
-Application architecture
-------------------------
+Processing events triggered by the user
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Android activity is responsible for mediating between the view
 components and the POJO bounded counter model we saw above. The full
@@ -331,23 +332,49 @@ finally updates the view states as necessary.
    :language: java 
    :linenos:
 
-This overall architecture is known as *model-view-adapter (MVA)*,
-where the adapter component mediates all interactions between the view
-and the model. (By contrast, the *model-view-controller (MVC)*
-architecture has a triangular shape and allows the model to update the
-view(s) directly via update events.) The figure below illustrates this
-architecture. The solid arrows represent ordinary method invocations,
-and the dashed arrow represents event-based interaction. View and
-adapter play the roles of observable and observer, respectively, in
-the Observer pattern that describes the top half of this architecture.
+.. figure:: images/ClickCounterSequenceDiagram.png
+   :alt: ClickCounter Sequence Diagram
+   :scale: 100%
+
+   This UML sequence diagram shows the full event-based interaction
+   cycle in response to a press of the increment button. Stick arrow
+   heads represent events, while filled arrow heads represent method
+   invocations.
+
+*What happens if the user presses two buttons at the same time?* The
+GUI framework responds to at most one button press or other event
+trigger at any given time. If two or more event triggers occur close
+together or at the same time, the GUI framework processes them
+sequentially in some order. Specifically, only after the event
+listener method handling the current event returns will the framework
+process the next event. This approach is called the *single-threaded
+user interface* approach. It keeps the programming model simple and
+avoids problems such as race conditions or deadlocks that can arise in
+multithreaded approaches.
+
+Application architecture  
+------------------------
+ 
+This overall application architecture, where a component mediates
+between view components and model components, is known as
+*model-view-adapter (MVA)*, where the adapter component mediates all
+interactions between the view and the model. (By contrast, the
+*model-view-controller (MVC)* architecture has a triangular shape and
+allows the model to update the view(s) directly via update events.)
+The figure below illustrates this architecture. The solid arrows
+represent ordinary method invocations, and the dashed arrow represents
+event-based interaction. View and adapter play the roles of observable
+and observer, respectively, in the Observer pattern that describes the
+top half of this architecture.
 
 .. figure:: images/ModelViewAdapter.png
    :alt: Model-View-Adapter Architecture
    :scale: 100%
 
-   The Model-View-Adapter (MVA) architecture of the bounded click
-   counter Android app. Solid arrows represent method invocation, and
-   dashed arrows represent event flow.
+   This UML class diagram shows the Model-View-Adapter (MVA)
+   architecture of the bounded click counter Android app. Solid arrows
+   represent method invocation, and dashed arrows represent event
+   flow.
 
 
 Testing GUI applications
