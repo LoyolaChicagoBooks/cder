@@ -4,14 +4,37 @@ Interactive Behaviors and Implicit Concurrency with Internal Timers
 Learning objectives
 -------------------
 
-* Internal timers as event sources (CS1/CS2: C, IOOD: A)
-* Timeout events (CS1/CS2: C, IOOD: A)
-* Recurring timers (CS1/CS2: C, IOOD: A)
-* Modeling more complex application behavior with UML State Machine diagrams (IOOD: A)
-* Structuring interactive applications (IOOD: A)
-   * Model-View-Adapter (MVA) architecture
-   * Façade pattern
-   * Testability (CS2: C, IOOD: A)
+**TODO** streamline
+
+- Modeling
+  - Distinguishing between view states and (behavioral) model states
+- Semantics
+  - Internal events from background timers
+  - Concurrency issues: single-thread rule of accessing/updating the view in the GUI thread
+- Architecture and Design (focus on relevant essentials here)
+  - Distinguishing among dumb, reactive, and autonomous model components
+  - Implementing state-dependent behavior using the State pattern
+  - Command pattern for representing tasks as objects
+  - Façade pattern for hiding complexity in the model from the adapter
+  - Relevant class-level design principles
+    - Dependency Inversion Principle (DIP)
+    - Single Responsibility Principle (SRP)
+    - Interface Segregation Principle (ISP)
+  - Package-level architecture and relevant principles
+    - Dependency graph (see also here)
+    - Stable Dependencies Principle (SDP)
+    - Acyclic Dependencies Principle (ADP)
+  - Architectural journey
+- Testing
+  - Different types of testing
+    - Component-level unit testing
+    - System testing
+    - Instrumentation testing
+    - Mock-based testing
+    - Testcase Superclass pattern
+    - Test coverage
+
+
 
 Introduction
 ------------
@@ -24,8 +47,9 @@ asdf
 
    The Model-View-Adapter (MVA) architecture of the countdown timer 
    Android app. Solid arrows represent (synchronous) method invocation, 
-   and dashed arrows represent (asynchronous) events. Here, the model's
-   autonomous timer behavior sends events to the adapter.
+   and dashed arrows represent (asynchronous) events. Here, both the 
+   view components and the model's autonomous timer send events to
+   the adapter.
 
 asdf
 

@@ -9,10 +9,24 @@ Learning objectives
 * User interaction in applications with a graphical interface (GUI) (CS2: A)
 * Modeling simple behaviors with UML State Machine diagrams (IOOD: C) 
 * Understanding user interaction as events
+
    * GUI widgets as event sources (CS2: C)
+
    * Event listeners and the Observer pattern (IOOD: A)
+
+   * Single-threaded UI event handling
+
 * The Model-View-Adapter architectural pattern (IOOD: A)
 * Testing interactive applications (IOOD: A)
+* Testing
+
+  - Different types of testing
+
+    - Component-level unit testing
+    - System testing
+    - Instrumentation testing
+
+  - Testcase Superclass pattern
 
 Introduction
 ------------
@@ -187,7 +201,10 @@ to support a single reset transition back to the minimum state.
 
 As you can see, the three model states map directly to the view states
 from the previous subsection, and the transitions enabled in each
-model state map to the buttons enabled in each view state.
+model state map to the buttons enabled in each view state. This is not
+always the case, though, and we will see examples in a later section
+of an application with multiple model states but only a single view
+state.
 
 GUI widgets as event sources
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -345,16 +362,15 @@ necessary.
 
 *What happens if the user presses two buttons at the same time?* The
 GUI framework responds to at most one button press or other event
-trigger at any given time. If two or more event triggers occur close
-together or at the same time, the GUI framework processes them
-sequentially in some order. Specifically, only after the event
+trigger at any given time. While the GUI framework is processing an
+event, it places additional incoming event triggers on a queue and
+fully processes each one in turn. Specifically, only after the event
 listener method handling the current event returns will the framework
-process the next event. (Accordingly, the activation boxes of
-different event listener method invocations in the UML sequence
-diagram must not overlap.) This approach is called the
-*single-threaded user interface toolkit* approach. It keeps the
-programming model simple and avoids problems such as race conditions
-or deadlocks that can arise in multithreaded approaches.
+process the next event. (Accordingly, activation boxes of different
+event listener method invocations in the UML sequence diagram must not
+overlap.) This approach is called *single-threaded event handling*. It
+keeps the programming model simple and avoids problems such as race
+conditions or deadlocks that can arise in multithreaded approaches.
 
 Application architecture  
 ------------------------
@@ -422,23 +438,25 @@ unit tests for the POJO bounded counter model still work in the
 context of the overall Android app.
 
 The test code itself can benefit from the use of certain design
-patterns. For example, we have two choice for testing our app: 
+patterns. For example, we have two choice for system-testing our app:
 
-- Testing on an actual Android phone or tablet emulator (or physical
-  device) requires deploying the application under test and the test
-  code to the emulator and tends to be quite slow.
+- In-container/instrumentation testing on an actual Android phone or
+  tablet emulator (or physical device) requires deploying the
+  application under test and the test code to the emulator and tends
+  to be quite slow.
 
-- Testing on the development workstation using a test framework such
-  as *Robolectric* that simulates an Android runtime environment tends
-  to be considerably faster.
+- Out-of-container testing on the development workstation using a test
+  framework such as *Robolectric* that simulates an Android runtime
+  environment tends to be considerably faster.
 
-Typically, we will want to run the exact same tests in both ways,
-starting with the simulated environment and occasionally targeting the
-emulator or device. An effective way to structure our test code for
-this purpose is the xUnit pattern *Testcase Superclass*. As the
-pattern name suggests, we pull up the common test code into an
-abstract superclass, and each of the two concrete test classes
-inherits the common code and runs it in the desired environment.
+Typically, we will want to run the exact same test logic in both
+cases, starting with the simulated environment and occasionally
+targeting the emulator or device. An effective way to structure our
+test code for this purpose is the xUnit pattern *Testcase
+Superclass*. As the pattern name suggests, we pull up the common test
+code into an abstract superclass, and each of the two concrete test
+classes inherits the common code and runs it in the desired
+environment.
 
 .. code-block:: java
    :linenos:
@@ -478,4 +496,5 @@ References:
 - https://www.palantir.com/2009/04/model-view-adapter/
 - https://bitbucket.org/loyolachicagocs_comp313/clickcounter-android-java 
 - http://xunitpatterns.com/
+- UML
 
