@@ -32,7 +32,8 @@ asdf
 .. figure:: images/CountdownTimerStates.png
    :alt: Countdown Timer FSM
 
-   The finite state machine of the countdown timer model.
+   The finite state machine modeling the dynamic behavior of the countdown
+   timer application.
 
 asfd
 

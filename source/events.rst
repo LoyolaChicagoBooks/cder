@@ -182,7 +182,8 @@ to support a single reset transition back to the minimum state.
 .. figure:: images/BoundedCounterStates.png
    :alt: Bounded Counter FSM
 
-   The finite state machine of the bounded counter model.
+   The finite state machine modeling the dynamic behavior of the
+   bounded counter application.
 
 As you can see, the three model states map directly to the view states
 from the previous subsection, and the transitions enabled in each
@@ -314,11 +315,12 @@ cycle of each event-based interaction goes like this. By pressing the
 increment button, the user triggers the ``onClick`` event on that
 button, and the ``onIncrement`` method gets called. This method
 interacts with the model instance by invoking the ``increment`` method
-and then requests a view update. The corresponding ``updateView``
-method also interacts with the model instance by retrieving the
-current counter value using the ``get`` method, displays this value in
-the corresponding GUI element with unique ID ``textview_value``, and
-finally updates the view states as necessary.
+and then requests a view update of the activity itself. The
+corresponding ``updateView`` method also interacts with the model
+instance by retrieving the current counter value using the ``get``
+method, displays this value in the corresponding GUI element with
+unique ID ``textview_value``, and finally updates the view states as
+necessary.
 
 .. literalinclude:: ../examples/clickcounter-android-java/ClickCounter/src/main/java/edu/luc/etl/cs313/android/clickcounter/ClickCounterActivity.java
    :start-after: begin-method-onIncrement
@@ -338,7 +340,7 @@ finally updates the view states as necessary.
 
    This UML sequence diagram shows the full event-based interaction
    cycle in response to a press of the increment button. Stick arrow
-   heads represent events, while filled arrow heads represent method
+   heads represent events, while solid arrow heads represent method
    invocations.
 
 *What happens if the user presses two buttons at the same time?* The
@@ -347,10 +349,12 @@ trigger at any given time. If two or more event triggers occur close
 together or at the same time, the GUI framework processes them
 sequentially in some order. Specifically, only after the event
 listener method handling the current event returns will the framework
-process the next event. This approach is called the *single-threaded
-user interface* approach. It keeps the programming model simple and
-avoids problems such as race conditions or deadlocks that can arise in
-multithreaded approaches.
+process the next event. (Accordingly, the activation boxes of
+different event listener method invocations in the UML sequence
+diagram must not overlap.) This approach is called the
+*single-threaded user interface toolkit* approach. It keeps the
+programming model simple and avoids problems such as race conditions
+or deadlocks that can arise in multithreaded approaches.
 
 Application architecture  
 ------------------------
