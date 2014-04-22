@@ -61,6 +61,31 @@ asdf
 
 asfd
 
+.. figure:: images/CountdownTimerStoppedZero.png
+   :alt: Countdown Timer stopped state with zero time
+   :scale: 50%
+
+   The initial stopped state of the countdown timer with zero time left.
+
+.. figure:: images/CountdownTimerStoppedNonzero.png
+   :alt: Countdown Timer stopped state with zero time
+   :scale: 50%
+
+   The countdown timer in the stopped state after adding some time.
+
+.. figure:: images/CountdownTimerRunning.png
+   :alt: Countdown Timer stopped state with zero time
+   :scale: 50%
+
+   The countdown timer in the running state.
+
+.. figure:: images/CountdownTimerRinging.png
+   :alt: Countdown Timer in the alarm state
+   :scale: 50%
+
+   The countdown timer in the alarm ringing state.
+
+
 explain the two types of timers
 
 - timeout - stopped state 
@@ -73,6 +98,10 @@ explain possibility of custom app-specific events
 
 explain JavaBeans event source/listener patterns
 
+
+**TODO** improve view states:
+- remove label
+- label button: add time, cancel, silent
 
 
 **TODO** code examples
