@@ -175,8 +175,8 @@ interface:
 
 - Instead of setting a visual display, we'll *modify a counter value*.
 
-After we take this step, we can use a *finite state machine* [REF] to
-model the dynamic behavior we described at the beginning of this
+After we take this step, we can use a UML state machine diagram [REF]
+to model the dynamic behavior we described at the beginning of this
 section more formally. Note how the touch buttons correspond to
 *events* (triggers of *transitions*, i.e., arrows) with the matching
 names.
@@ -196,7 +196,7 @@ to support a single reset transition back to the minimum state.
 .. figure:: images/BoundedCounterStates.png
    :alt: Bounded Counter FSM
 
-   The finite state machine modeling the dynamic behavior of the
+   The UML state machine diagram modeling the dynamic behavior of the
    bounded counter application.
 
 As you can see, the three model states map directly to the view states
