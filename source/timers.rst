@@ -190,19 +190,47 @@ follows:
 
 Concrete state classes implement the ``TimerState`` interface.
 
+**TODO** refactor to have separate listener method for three-second timeout for clearer pedagogy
+
+Let's focus on the stopped state first. In this state, neither is the
+clock ticking, nor is the alarm ringing. On every button press, the
+remaining running time goes up by one second and the one-shot
+three-second idle timeout starts from zero. If three seconds elapse
+before another button press, we transition to the running state.
+
 .. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/StoppedState.java
    :start-after: begin-type-StoppedState
    :end-before: end-type-StoppedState
    :language: java 
    :linenos:
 
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/DefaultTimerStateMachine.java
+   :start-after: begin-section-actionsStopped
+   :end-before: end-section-actionsStopped
+   :language: java 
+   :linenos:
+
+Let's now focus on the running state. In this state, the clock is
+ticking but the alarm is not ringing. With every recurring clock tick,
+the remaining running time goes down by one second. If it reaches
+zero, we transition to the ringing state. If a button press occurs, we
+stop the clock and transition to the stopped state.
+
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/RunningState.java
+   :start-after: begin-type-RunningState
+   :end-before: end-type-RunningState
+   :language: java 
+   :linenos:
+
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/DefaultTimerStateMachine.java
+   :start-after: begin-section-actionsRunning
+   :end-before: end-section-actionsRunning
+   :language: java 
+   :linenos:
 
 
 
-
-**TODO** need sequence diagrams explaining the two types of timer
- behaviors?
-
+**TODO** need sequence diagrams for the two main use cases (run until alarm versus run until stopped) explaining the two types of timer behaviors?
 
 
 Managing structural complexity
@@ -219,19 +247,22 @@ Managing structural complexity
    the adapter.
 
 
+**TODO** need diagram showing connections and event flow within model?
 
-explain possibility of custom app-specific events
 
-explain JavaBeans event source/listener patterns
+mention JavaBeans event source/listener patterns  
+
+mention possibility of custom app-specific events
+
 
 
 **TODO** revise readme files for the various code examples ->
 countdown timer still same as stopwatch
 
 
-**TODO** fix lifecycle-related exception when pressing home button,
-also verify handling of rotation
+**TODO** fix lifecycle-related exception when pressing home button (possible cause: model facade not serializable), also verify handling of rotation
 
+**TODO** invoke actionStop from within actionDecRuntime when runtime reaches 0?
 
 **TODO** code examples
 
