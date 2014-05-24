@@ -284,3 +284,6 @@ countdown timer still same as stopwatch
 in a separate window:
 
 /Applications/Local/Android\ Studio.app/sdk/platform-tools/adb logcat
+
+
+**TODO** consider Q&A-style sidebar on single-threaded GUI model (with brief intro to race conditions)
