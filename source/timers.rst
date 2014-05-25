@@ -188,9 +188,14 @@ follows:
    :language: java 
    :linenos:
 
-Concrete state classes implement the ``TimerState`` interface.
+Concrete state classes implement the abstract ``TimerState``
+class. The key parts of the state machine implementation follow:
 
-**TODO** refactor to have separate listener method for three-second timeout for clearer pedagogy
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/DefaultTimerStateMachine.java
+   :start-after: begin-type-DefaultTimerStateMachine
+   :end-before: end-type-DefaultTimerStateMachine 
+   :language: java 
+   :linenos:
 
 Let's focus on the stopped state first. In this state, neither is the
 clock ticking, nor is the alarm ringing. On every button press, the
@@ -198,40 +203,13 @@ remaining running time goes up by one second and the one-shot
 three-second idle timeout starts from zero. If three seconds elapse
 before another button press, we transition to the running state.
 
-.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/StoppedState.java
-   :start-after: begin-type-StoppedState
-   :end-before: end-type-StoppedState
-   :language: java 
-   :linenos:
-
-.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/DefaultTimerStateMachine.java
-   :start-after: begin-section-actionsStopped
-   :end-before: end-section-actionsStopped
-   :language: java 
-   :linenos:
-
 Let's now focus on the running state. In this state, the clock is
 ticking but the alarm is not ringing. With every recurring clock tick,
 the remaining running time goes down by one second. If it reaches
 zero, we transition to the ringing state. If a button press occurs, we
 stop the clock and transition to the stopped state.
 
-.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/RunningState.java
-   :start-after: begin-type-RunningState
-   :end-before: end-type-RunningState
-   :language: java 
-   :linenos:
-
-.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/DefaultTimerStateMachine.java
-   :start-after: begin-section-actionsRunning
-   :end-before: end-section-actionsRunning
-   :language: java 
-   :linenos:
-
-
-
 **TODO** need sequence diagrams for the two main use cases (run until alarm versus run until stopped) explaining the two types of timer behaviors?
-
 
 Managing structural complexity
 ------------------------------
@@ -240,11 +218,11 @@ Managing structural complexity
    :alt: Autonomous Model-View-Adapter Architecture
    :scale: 100%
 
-   The Model-View-Adapter (MVA) architecture of the countdown timer 
-   Android app. Solid arrows represent (synchronous) method invocation, 
-   and dashed arrows represent (asynchronous) events. Here, both the 
-   view components and the model's autonomous timer send events to
-   the adapter.
+   The Model-View-Adapter (MVA) architecture of the countdown timer
+   Android app. Solid arrows represent (synchronous) method
+   invocation, and dashed arrows represent (asynchronous)
+   events. Here, both the view components and the model's autonomous
+   timer send events to the adapter.
 
 
 **TODO** need diagram showing connections and event flow within model?
@@ -256,7 +234,7 @@ mention possibility of custom app-specific events
 
 
 
-**TODO** revise readme files for the various code examples ->
+**TODO** revise readme files for the various code examples:
 countdown timer still same as stopwatch
 
 
@@ -284,6 +262,3 @@ countdown timer still same as stopwatch
 in a separate window:
 
 /Applications/Local/Android\ Studio.app/sdk/platform-tools/adb logcat
-
-
-**TODO** consider Q&A-style sidebar on single-threaded GUI model (with brief intro to race conditions)
