@@ -14,6 +14,7 @@ Welcome to SphinxBootstrapExemplar's documentation!
    timers
    activities
    distributed
+   summary
 
 
 Indices and tables
