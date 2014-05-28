@@ -17,13 +17,13 @@ Learning objectives
   - Command pattern for representing tasks as objects
   - Façade pattern for hiding complexity in the model from the adapter
   - Relevant class-level design principles
-    - Dependency Inversion Principle (DIP)
-    - Single Responsibility Principle (SRP)
-    - Interface Segregation Principle (ISP)
+     - Dependency Inversion Principle (DIP)
+     - Single Responsibility Principle (SRP)
+     - Interface Segregation Principle (ISP)
   - Package-level architecture and relevant principles
-    - Dependency graph (see also here)
-    - Stable Dependencies Principle (SDP)
-    - Acyclic Dependencies Principle (ADP)
+     - Dependency graph (see also here)
+     - Stable Dependencies Principle (SDP)
+     - Acyclic Dependencies Principle (ADP)
   - Architectural journey
 - Testing
   - Different types of testing
@@ -182,9 +182,9 @@ follows:
    :language: java 
    :linenos:
 
-.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/clock/OnTickListener.java
-   :start-after: begin-type-OnTickListener
-   :end-before: end-type-OnTickListener
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/clock/ClockListener.java
+   :start-after: begin-type-ClockListener
+   :end-before: end-type-ClockListener
    :language: java 
    :linenos:
 
