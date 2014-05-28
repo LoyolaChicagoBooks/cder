@@ -8,5 +8,5 @@
 # Actual CDER/COMP 313 Examples
 hg,clickcounter-android-java,https://bitbucket.org/loyolachicagocs_comp313/clickcounter-android-java
 hg,stopwatch-android-java,https://bitbucket.org/loyolachicagocs_comp313/stopwatch-android-java
-hg,countdowntimer-android-java,ssh://hg@bitbucket.org/loyolachicagocs_comp313/countdowntimer-android-java-solution
-hg,primenumbers-android-java,ssh://hg@bitbucket.org/loyolachicagocs_comp313/primenumbers-android-java
+hg,countdowntimer-android-java,https://bitbucket.org/loyolachicagocs_comp313/countdowntimer-android-java-solution
+hg,primenumbers-android-java,https://bitbucket.org/loyolachicagocs_comp313/primenumbers-android-java
