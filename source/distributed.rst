@@ -39,9 +39,7 @@ performing the check locally. We use
 request asynchronously: Instead of waiting for completion, we can
 perform other work---such as responding to user input---while the
 request is in progress and receive notifications for events in the
-request lifecycle, such as completion. Fortunately, because
-``AsyncHttpClient`` is already asynchronous, there is no need to use
-``AsyncTask`` anymore.
+request lifecycle, such as completion. 
 
 .. literalinclude:: ../examples/primenumbers-android-java/PrimeNumbers/src/main/java/edu/luc/etl/cs313/android/primechecker/android/PrimeCheckerRemoteTask.java
    :start-after: begin-method-remoteStart
@@ -57,6 +55,16 @@ Cancelation of pending requests is supported as well.
    :language: java 
    :linenos:
 
+Fortunately, because ``AsyncHttpClient`` is already asynchronous,
+there is no need to use ``AsyncTask`` anymore. This is how we invoke
+the remote task:
+
+.. literalinclude:: ../examples/primenumbers-android-java/PrimeNumbers/src/main/java/edu/luc/etl/cs313/android/primechecker/android/PrimeCheckerAdapter.java
+   :start-after: begin-fragment-executeRemote
+   :end-before: end-fragment-executeRemote
+   :language: java 
+   :linenos:
+ 
 The tradeoff
 ------------
 
