@@ -78,8 +78,9 @@ from zero to 100 when the check finishes.
 	  every event handler that accesses GUI; explain a bit more in
 	  a sidebar (including race conditions etc.)
 
-.. todo:: consider Q&A-style sidebar on single-threaded GUI model (with brief intro to race conditions, explain how component repaint events are queued, etc.)
+.. todo:: consider Q&A-style sidebar or subsection on single-threaded GUI model (with brief intro to race conditions, explain how component repaint events are queued, etc.)
 
+.. todo:: show specific scenarios with exact sequence of events
 
 Background tasks to the rescue
 ------------------------------
