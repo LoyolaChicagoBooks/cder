@@ -325,7 +325,7 @@ owns the interfaces its listeners must implement.
    public class View {
        ...
        public static interface OnClickListener {
-           public void onClick(View source);
+           void onClick(View source);
        }
        public void setOnClickListener(final OnClickListener listener) { ... }
        ...

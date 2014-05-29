@@ -1,8 +1,6 @@
 Keeping the User Interface Responsive with Background Activities
 ================================================================
 
-**TODO** refactor back to doInBackground calling isPrime and invoke isPrime in foreground
-
 Learning objectives
 -------------------
 
@@ -16,56 +14,45 @@ Learning objectives
 Introduction
 ------------
 
-The running example for this and the next section is a prime number
-checking app. 
+The running example for this section is a simple prime number checking
+app.
 
 .. figure:: images/PrimecheckerAndroid.png
    :alt: Prime checker Android app
    :scale: 50%
 
-   asdf adf
+   Screenshot of an Android app for checking prime numbers
 
-We can check whether a number is prime using this brute-force
+This app allows us to enter a number in a text field. When we press
+the "check" button, the app checks whether the number we entered is
+prime. There are different ways to run this check, and the app allows
+us to explore these.
+
+To check whether a number is prime, we can use this brute-force
 algorithm. While not a good prime checker implementation, the fact
 that it hogs the processor makes it an effective running example for
 discussing whether to move processor-bound activities to the
-background (or remote servers).  **TODO** footnote with forward
-reference to future work
+background (or remote servers).
+
+.. todo:: footnote with forward reference to future work on web
+	  services/remote tasks
 
 .. literalinclude:: ../examples/primenumbers-android-java/PrimeNumbers/src/main/java/edu/luc/etl/cs313/android/primechecker/android/PrimeCheckerTask.java
-   :start-after: begin-method-doInBackground
-   :end-before: end-method-doInBackground 
+   :start-after: begin-method-isPrime
+   :end-before: end-method-isPrime
    :language: java 
    :linenos:
 
-The auxiliary methods ``isCancelled`` and ``publishProgress`` are
-for checking whether the user has tried to cancel the ongoing check
-and updating the progress bar, respectively. They are connected to the
-``AsyncTask`` lifecycle methods ``onCancelled`` and
-``onProgressUpdate``, respectively. These and several other
-lifecycle methods are implemented here:
+For now, let's ignore the ``isCancelled`` and ``updateProgress``
+methods and agree to discuss their significance later in this section.
 
-.. literalinclude:: ../examples/primenumbers-android-java/PrimeNumbers/src/main/java/edu/luc/etl/cs313/android/primechecker/android/PrimeCheckerTask.java
-   :start-after: begin-methods-asyncTask
-   :end-before: end-methods-asyncTask
-   :language: java 
-   :linenos:
 
 The problem with foreground tasks
 ---------------------------------
 
-- explain freezing UI, cannot cancel
-- explain that even attempted UI *updates* are queued and don't happen
-  until foreground task is done
-  - this is a consequence of the single-threaded event model
-  - why not make event handling asynchronous? huge can of worms, UI is
-    shared resource, would have to use mutual exclusion in every event
-    handler that accesses GUI; explain a bit more in a sidebar
-    (including race conditions etc.)
-
-**TODO** consider Q&A-style sidebar on single-threaded GUI model (with brief intro to race conditions, explain how component repaint events are queued, etc.)
-
-We can now run the prime number checker from within our event listener:
+As a first attempt, we now can run the ``isPrime`` method from within
+our event listener in the current thread of execution (the main GUI
+thread).
 
 .. literalinclude:: ../examples/primenumbers-android-java/PrimeNumbers/src/main/java/edu/luc/etl/cs313/android/primechecker/android/PrimeCheckerAdapter.java
    :start-after: begin-fragment-executeForeground
@@ -73,16 +60,26 @@ We can now run the prime number checker from within our event listener:
    :language: java 
    :linenos:
 
-The methods ``onPreExecute`` and ``onPostExecute`` are for
-resetting the user interface and displaying the result. Note that we
-are running the method ``doInBackground`` directly in the
-foreground---despite its name---because we are simply invoking it in
-the current thread of execution (the main GUI thread).
+The methods ``onPreExecute`` and ``onPostExecute`` are for resetting
+the user interface and displaying the result.
 
-If we do this, however, the user interface freezes while the prime
-number check is going on, so it does not respond to pressing the
-cancel button. There is no progress reporting either: The progress bar
-jumps from zero to 100 when the check finishes.
+This approach works for very small numbers. For larger numbers,
+however, the user interface freezes noticeably while the prime number
+check is going on, so it does not respond to pressing the cancel
+button. There is no progress reporting either: The progress bar jumps
+from zero to 100 when the check finishes.
+
+.. todo:: explain freezing UI, cannot cancel
+
+.. todo:: explain that even attempted UI *updates* are queued and don't happen until foreground task is done
+        - this is a consequence of the single-threaded event model
+        - why not make event handling asynchronous? huge can of worms,
+	  UI is shared resource, would have to use mutual exclusion in
+	  every event handler that accesses GUI; explain a bit more in
+	  a sidebar (including race conditions etc.)
+
+.. todo:: consider Q&A-style sidebar on single-threaded GUI model (with brief intro to race conditions, explain how component repaint events are queued, etc.)
+
 
 Background tasks to the rescue
 ------------------------------
@@ -121,8 +118,9 @@ When an asynchronous task is executed, the task goes through 4 steps:
 
 
 
-
-The solution is to run ``doInBackground`` really in the background:
+The solution is to run the ``isPrime`` method the background by
+scheduling the corresponding ``AsyncTask`` on a suitable executor
+object.
 
 .. literalinclude:: ../examples/primenumbers-android-java/PrimeNumbers/src/main/java/edu/luc/etl/cs313/android/primechecker/android/PrimeCheckerAdapter.java
    :start-after: begin-fragment-executeBackground
@@ -130,5 +128,39 @@ The solution is to run ``doInBackground`` really in the background:
    :language: java 
    :linenos:
 
+We set up the corresponding asynchronous task with an input of type
+``Long``, progress of type ``Integer``, and result of type
+``Boolean``. In addition, the task has access to the input text field
+and progress bar in the Android GUI.
 
-**TODO** end of section summaries, Q&A/FAQ, questions to ponder/exercises
+.. literalinclude:: ../examples/primenumbers-android-java/PrimeNumbers/src/main/java/edu/luc/etl/cs313/android/primechecker/android/PrimeCheckerTask.java 
+   :start-after: begin-fragment-PrimeCheckerTaskSETUP 
+   :end-before: end-fragment-PrimeCheckerTaskSETUP 
+   :language: java 
+   :linenos:
+
+Most importantly, the main method of the task, ``doInBackground``,
+invokes ``isPrime``. The auxiliary methods ``isCancelled`` and
+``publishProgress`` we saw earlier in the implementation of
+``isPrime`` are for checking for requests to cancel the current task
+and updating the progress bar, respectively.
+
+In our example, when the user presses the cancel button, any currently
+running tasks are canceled using the control method
+``cancel(boolean)``, and subsequent invocations of ``isCancelled``
+return false. Conversely, when ``publishProgress`` is invoked from
+within ``doInBackground`` (in our case, from within ``isPrime``), an
+invocation of the lifecycle method ``onProgressUpdate(Progress...)``
+with the provided argument(s) is scheduled on the main event handling
+thread and will be executed as soon as that thread gets to it.
+
+The various lifecycle methods are implemented here:
+
+.. literalinclude:: ../examples/primenumbers-android-java/PrimeNumbers/src/main/java/edu/luc/etl/cs313/android/primechecker/android/PrimeCheckerTask.java
+   :start-after: begin-methods-asyncTask
+   :end-before: end-methods-asyncTask
+   :language: java 
+   :linenos:
+
+
+.. todo:: end of section summaries, Q&A/FAQ, questions to ponder/exercises
