@@ -37,6 +37,10 @@ development framework. Our running example will be a bounded click
 counter application that can be used to keep track of the capacity of,
 say, a movie theater.
 
+This is an example of a section reference :ref:`sec_BoundedCounterAbstraction` (example for K).
+
+.. _sec_BoundedCounterAbstraction:
+
 The bounded counter abstraction
 -------------------------------
 
@@ -132,6 +136,10 @@ These decisions lead to the three *view states* shown in the following
 images. Note how the reset button is always enabled, while the
 decrement and increment buttons are disabled in the minimum and
 maximum states, respectively.
+
+See figure :ref:`fig_BoundedCounterViewStateMin` (example for K).
+
+.. _fig_BoundedCounterViewStateMin:
 
 .. figure:: images/BoundedCounterViewStateMin.png
    :alt: Bounded Counter Min State
