@@ -91,7 +91,9 @@ Background tasks to the rescue
 - describe Android AsyncTask and how it supports the concept
 - example: PrimeCheckerTask
 
-.. code-block:: xml
+.. todo:: tighten up the following summary of the AsyncTask API
+
+.. code-block:: java
    :linenos:
 
    public abstract class AsyncTask<Params, Progress, Result> {
@@ -150,7 +152,7 @@ running tasks are canceled using the control method
 ``cancel(boolean)``, and subsequent invocations of ``isCancelled``
 return false. Conversely, when ``publishProgress`` is invoked from
 within ``doInBackground`` (in our case, from within ``isPrime``), an
-invocation of the lifecycle method ``onProgressUpdate(Progress...)``
+invocation of the lifecycle method ``onProgressUpdate``
 with the provided argument(s) is scheduled on the main event handling
 thread and will be executed as soon as that thread gets to it.
 
