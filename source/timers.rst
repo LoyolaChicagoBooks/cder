@@ -4,7 +4,7 @@ Interactive Behaviors and Implicit Concurrency with Internal Timers
 Learning objectives
 -------------------
 
-**TODO** streamline
+.. todo:: streamline
 
 - Modeling
   - Distinguishing between view states and (behavioral) model states
@@ -163,8 +163,9 @@ state machine, we can use the *State* software design pattern to
 separate state-dependent behavior from overarching handling of
 external and internal triggers and actions.
 
-We start by defining a state abstraction. Each state has a unique
-identifier and a state-specific method for updating the view.
+We start by defining a state abstraction. Besides the same common
+methods and reference to its surrounding state machine, each state has
+a unique identifier.
 
 .. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/TimerState.java
    :start-after: begin-type-TimerState
@@ -192,8 +193,8 @@ Concrete state classes implement the abstract ``TimerState``
 class. The key parts of the state machine implementation follow:
 
 .. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/DefaultTimerStateMachine.java
-   :start-after: begin-type-DefaultTimerStateMachine
-   :end-before: end-type-DefaultTimerStateMachine 
+   :start-after: begin-fragment-DefaultTimerStateMachineSETUP
+   :end-before: end-fragment-DefaultTimerStateMachineSETUP
    :language: java 
    :linenos:
 
@@ -203,13 +204,35 @@ remaining running time goes up by one second and the one-shot
 three-second idle timeout starts from zero. If three seconds elapse
 before another button press, we transition to the running state.
 
-Let's now focus on the running state. In this state, the clock is
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/DefaultTimerStateMachine.java
+   :start-after: begin-fragment-DefaultTimerStateMachineSTOPPED
+   :end-before: end-fragment-DefaultTimerStateMachineSTOPPED
+   :language: java 
+   :linenos:
+ 
+Let's now take a look at the running state. In this state, the clock is
 ticking but the alarm is not ringing. With every recurring clock tick,
 the remaining running time goes down by one second. If it reaches
 zero, we transition to the ringing state. If a button press occurs, we
 stop the clock and transition to the stopped state.
 
-**TODO** need sequence diagrams for the two main use cases (run until alarm versus run until stopped) explaining the two types of timer behaviors?
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/DefaultTimerStateMachine.java
+   :start-after: begin-fragment-DefaultTimerStateMachineRUNNING
+   :end-before: end-fragment-DefaultTimerStateMachineRUNNING
+   :language: java 
+   :linenos:
+
+Finally, in the ringing state, nothing is happening other than the
+alarm ringing. If a button press occurs, we stop the alarm and
+transition to the stopped state.
+ 
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/model/state/DefaultTimerStateMachine.java
+   :start-after: begin-fragment-DefaultTimerStateMachineRINGING
+   :end-before: end-fragment-DefaultTimerStateMachineRINGING
+   :language: java 
+   :linenos:
+ 
+.. todo:: need sequence diagrams for the two main use cases (run until alarm versus run until stopped) explaining the two types of timer behaviors?
 
 Managing structural complexity
 ------------------------------
@@ -225,7 +248,7 @@ Managing structural complexity
    timer send events to the adapter.
 
 
-**TODO** need diagram showing connections and event flow within model?
+.. todo:: need diagram showing connections and event flow within model?
 
 
 mention JavaBeans event source/listener patterns  
@@ -233,18 +256,15 @@ mention JavaBeans event source/listener patterns
 mention possibility of custom app-specific events
 
 
+.. todo:: revise readme files for the various code examples: countdown
+          timer still same as stopwatch
 
-**TODO** revise readme files for the various code examples:
-countdown timer still same as stopwatch
 
+.. todo:: fix lifecycle-related exception when pressing home button (possible cause: model facade not serializable), also verify handling of rotation
 
-**TODO** fix lifecycle-related exception when pressing home button (possible cause: model facade not serializable), also verify handling of rotation
+.. todo:: invoke actionStop from within actionDecRuntime when runtime reaches 0?
 
-**TODO** invoke actionStop from within actionDecRuntime when runtime reaches 0?
-
-**TODO** code examples
-
-- listener interfaces
+.. todo:: code examples
 - adapter
   - receive view events
   - receive model events
@@ -254,8 +274,7 @@ countdown timer still same as stopwatch
   - wiring pieces together
 - testing?
 
-**TODO** edit-compile-test-run lifecycle in Gradle including
- instrumentation tests
+.. todo:: edit-compile-test-run lifecycle in Gradle including instrumentation tests
 
 /Applications/Local/Android\ Studio.app/sdk/tools/emulator -avd gnex
 

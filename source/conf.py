@@ -333,3 +333,6 @@ epub_copyright = u'2013, Konstantin Läufer and George K. Thiruvathukal'
 
 # Allow duplicate toc entries.
 #epub_tocdup = True
+
+todo_include_todos = True
+
