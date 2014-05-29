@@ -1,0 +1,12 @@
+DIAGRAMS
+
+- click counter state diagram for state-dependent behavior, UI states, etc.
+- https://www.palantir.com/2009/04/model-view-adapter/
+- Reactor to explain single-threaded event handling model (POSA2)
+
+GLOSSARY
+
+- event
+- event source
+- event handler
+- activity: in practice, anything too long to be handled synchronously
