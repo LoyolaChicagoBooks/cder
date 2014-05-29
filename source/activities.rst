@@ -65,7 +65,7 @@ The problem with foreground tasks
 
 **TODO** consider Q&A-style sidebar on single-threaded GUI model (with brief intro to race conditions, explain how component repaint events are queued, etc.)
 
-We can now the prime number checker from within our event listener:
+We can now run the prime number checker from within our event listener:
 
 .. literalinclude:: ../examples/primenumbers-android-java/PrimeNumbers/src/main/java/edu/luc/etl/cs313/android/primechecker/android/PrimeCheckerAdapter.java
    :start-after: begin-fragment-executeForeground
@@ -93,6 +93,34 @@ Background tasks to the rescue
   - cancelation
 - describe Android AsyncTask and how it supports the concept
 - example: PrimeCheckerTask
+
+.. code-block:: xml
+   :linenos:
+
+   public abstract class AsyncTask<Params, Progress, Result> {
+       
+   }
+
+
+The three types used by an asynchronous task are the following:
+
+- Params, the type of the parameters sent to the task upon execution.
+- Progress, the type of the progress units published during the background computation.
+- Result, the type of the result of the background computation.
+
+Not all types are always used by an asynchronous task. To mark a type
+as unused, simply use the type Void.
+
+
+When an asynchronous task is executed, the task goes through 4 steps:
+
+- onPreExecute(), invoked on the UI thread before the task is executed. This step is normally used to setup the task, for instance by showing a progress bar in the user interface.
+- doInBackground(Params...), invoked on the background thread immediately after onPreExecute() finishes executing. This step is used to perform background computation that can take a long time. The parameters of the asynchronous task are passed to this step. The result of the computation must be returned by this step and will be passed back to the last step. This step can also use publishProgress(Progress...) to publish one or more units of progress. These values are published on the UI thread, in the onProgressUpdate(Progress...) step.
+- onProgressUpdate(Progress...), invoked on the UI thread after a call to publishProgress(Progress...). The timing of the execution is undefined. This method is used to display any form of progress in the user interface while the background computation is still executing. For instance, it can be used to animate a progress bar or show logs in a text field.
+- onPostExecute(Result), invoked on the UI thread after the background computation finishes. The result of the background computation is passed to this step as a parameter.
+
+
+
 
 The solution is to run ``doInBackground`` really in the background:
 
