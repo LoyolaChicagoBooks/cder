@@ -13,7 +13,6 @@ Welcome to SphinxBootstrapExemplar's documentation!
    events
    timers
    activities
-   distributed
    summary
 
 
