@@ -250,7 +250,7 @@ to the adapter.
    :alt: Autonomous Model-View-Adapter Architecture
    :scale: 100%
 
-   Countdown timer Model-View-Adapter architecture
+   Countdown timer: Model-View-Adapter architecture
 
 .. figure:: images/CountdownTimerMVACollab1.png
    :alt: Countdown Timer MVA Collab Scenario 1
