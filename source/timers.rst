@@ -4,7 +4,7 @@ Interactive Behaviors and Implicit Concurrency with Internal Timers
 Learning objectives
 -------------------
 
-.. todo:: streamline
+.. todo:: streamline these and add Bloom levels
 
 - Modeling
   - Distinguishing between view states and (behavioral) model states
@@ -47,6 +47,8 @@ of time has elapsed.
 
 The interactive behavior of a countdown timer
 ---------------------------------------------
+
+.. todo:: use proper requirements terminology 
 
 Let's start with a fairly abstract description of the countdown
 timer's controls and behavior.
@@ -127,6 +129,8 @@ Let's again try to describe the abstract behavior of the countdown
 timer using a UML state machine diagram. As usual, there are various
 ways to do this, and our guiding principle is to keep things simple
 and close to the informal description of the behavior.
+
+.. todo:: UML dependency: brief note and external reference
 
 It is easy to see that we need to represent the current counter
 value. Once we accept this, we really don't need to distinguish
@@ -232,52 +236,135 @@ transition to the stopped state.
    :language: java 
    :linenos:
  
-.. todo:: need sequence diagrams for the two main use cases (run until alarm versus run until stopped) explaining the two types of timer behaviors?
-
 Managing structural complexity
 ------------------------------
+
+We can again describe the architecture of the countdown timer Android
+app as an instance of the Model-View-Adapter (MVA) architectural
+pattern. In figure [REF], solid arrows represent (synchronous) method
+invocation, and dashed arrows represent (asynchronous) events. Here,
+both the view components and the model's autonomous timer send events
+to the adapter.
 
 .. figure:: images/AutonomousModelViewAdapter.png
    :alt: Autonomous Model-View-Adapter Architecture
    :scale: 100%
 
-   The Model-View-Adapter (MVA) architecture of the countdown timer
-   Android app. Solid arrows represent (synchronous) method
-   invocation, and dashed arrows represent (asynchronous)
-   events. Here, both the view components and the model's autonomous
-   timer send events to the adapter.
+   Countdown timer Model-View-Adapter architecture
+
+.. figure:: images/CountdownTimerMVACollab1.png
+   :alt: Countdown Timer MVA Collab Scenario 1
+   :scale: 100%
+
+   Countdown timer: user input scenario
+
+.. figure:: images/CountdownTimerMVACollab2.png
+   :alt: Countdown Timer MVA Collab Scenario 2
+   :scale: 100%
+
+   Countdown timer: autonomous scenario
 
 
-.. todo:: need diagram showing connections and event flow within model?
+.. todo:: mention JavaBeans event source/listener patterns  
+
+.. todo:: mention possibility of custom app-specific events
+
+.. todo:: code examples: testing
+
+Testing
+-------
+
+.. todo:: explain testing terminology a bit more: SUT, types of testing, etc.  
 
 
-mention JavaBeans event source/listener patterns  
-
-mention possibility of custom app-specific events
-
-
-.. todo:: revise readme files for the various code examples: countdown
-          timer still same as stopwatch
+Unit-testing passive model components
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+The time model is simple passive component, so we can test it very
+similarly as the bounded counter model in the previous section [REF].
 
 
-.. todo:: fix lifecycle-related exception when pressing home button (possible cause: model facade not serializable), also verify handling of rotation
+Unit-testing components with autonomous behavior
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo:: invoke actionStop from within actionDecRuntime when runtime reaches 0?
+Testing components with autonomous behavior is more challenging
+because we have to attach some kind of probe to observe the
+behavior. Let's try this on our clock model. 
 
-.. todo:: code examples
-- adapter
-  - receive view events
-  - receive model events
-- model
-  - state pattern
-  - implementation of timeouts
-  - wiring pieces together
-- testing?
+The following test verifies that a stopped clock does not emit any
+tick events.
 
-.. todo:: edit-compile-test-run lifecycle in Gradle including instrumentation tests
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/test/model/clock/AbstractClockModelTest.java
+   :start-after: begin-method-testStopped
+   :end-before: end-method-testStopped
+   :language: java 
+   :linenos:
 
-/Applications/Local/Android\ Studio.app/sdk/tools/emulator -avd gnex
+And this one verifies that a running clock emits roughly one tick
+event per second.
 
-in a separate window:
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/test/model/clock/AbstractClockModelTest.java
+   :start-after: begin-method-testRunning
+   :end-before: end-method-testRunning
+   :language: java 
+   :linenos:
 
-/Applications/Local/Android\ Studio.app/sdk/platform-tools/adb logcat
+
+Unit-testing components with complex dependencies
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Some model components have complex dependencies. Our timer's state
+machine model, e.g., expects implementations of the interfaces
+``TimeModel``, ``ClockModel``, and ``TimerUIUpdateListener`` to be
+present.  We can achieve this by manually implementing a so-called
+*mock object* that unifies these three dependencies of the timer state
+machine model, corresponding to the three interfaces this mock object
+implements.
+
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/test/model/state/AbstractTimerStateMachineTest.java
+   :start-after: begin-type-UnifiedMockDependency 
+   :end-before: end-type-UnifiedMockDependency 
+   :language: java 
+   :linenos:
+
+The instance variables and corresponding getters enable us to test
+whether the SUT produced the expected state changes in the mock
+object. The three remaining blocks of methods correspond to the three
+implemented interfaces, respectively.
+
+Now we can write tests to verify actual scenarios. In the following
+scenario, time is 0, press button once, expect time 1, press button
+198 times (the max time is 99), expect time 99, wait 3 seconds, check
+if running, wait 50 seconds, expect time 49 (99-50), wait 49 seconds,
+expect time 0, check if ringing, wait 3 more seconds (just in case),
+check if still ringing, press button to turn off ring, make sure
+ringing stopped and state is stopped.
+
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/test/model/state/AbstractTimerStateMachineTest.java 
+   :start-after: begin-method-testScenarioRun2
+   :end-before: end-method-testScenarioRun2
+   :language: java 
+   :linenos:
+ 
+Note that this happens *in fake time* (fast-forward) because we
+control the rate of the clock ticks.
+
+.. todo:: There are also various mocking frameworks. 
+
+
+Integration-testing the adapter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following is an integration test of the adapter with its real
+dependencies present. It verifies the following scenario *in real
+time*: time is 0, press button five times, expect time 5, wait 3
+seconds, expect time 5, wait 3 more seconds, expect time 2, press
+stopTick button to reset time, expect time 0. (includes all state
+transitions as assertions).
+
+.. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/test/android/AbstractTimerActivityTest.java
+   :start-after: begin-method-testScenarioRun2 
+   :end-before: end-method-testScenarioRun2  
+   :language: java 
+   :linenos:
+

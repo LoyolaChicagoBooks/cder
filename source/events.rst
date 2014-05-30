@@ -4,6 +4,8 @@ Basic Event-Based User Interaction
 Learning objectives
 -------------------
 
+.. todo:: streamline these
+
 * Introduction to the Android framework (CS2: K, IOOD: C)
 * User interaction in console applications (CS1: A)
 * User interaction in applications with a graphical interface (GUI) (CS2: A)
@@ -78,6 +80,8 @@ use by building an interactive application on top of it.
 
 The interactive behavior of a click counter device
 --------------------------------------------------
+
+.. todo:: use proper requirements terminology
 
 Next, let's imagine a device that realizes this bounded counter
 concept. For example, a bouncer positioned at the door of a movie
@@ -220,6 +224,8 @@ GUI widgets as event sources
 The two figures show the GUI increment button selected in the Android
 Studio view component editor and the corresponding hierarchical tree
 view, respectively. 
+
+.. todo:: brief description of Android Studio concepts
 
 Our next step is to bring the app to life by connecting the visual
 interface with the interactive behavior. For example, when pressing

@@ -4,6 +4,8 @@ Keeping the User Interface Responsive with Background Activities
 Learning objectives
 -------------------
 
+.. todo:: expand these and add Bloom levels
+
 - synchronous local foreground tasks in Android (running directly in
   an event listener) -> bad unless really short
 - asynchronous local background tasks in Android using AsyncTask ->
@@ -22,6 +24,8 @@ app.
    :scale: 50%
 
    Screenshot of an Android app for checking prime numbers
+
+.. todo:: use proper requirements terminology
 
 This app allows us to enter a number in a text field. When we press
 the "check" button, the app checks whether the number we entered is
