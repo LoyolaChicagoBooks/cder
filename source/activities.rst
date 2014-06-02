@@ -1,4 +1,4 @@
-Keeping the User Interface Responsive with Background Activities
+KKeeping the User Interface Responsive with Background Activities
 ================================================================
 
 Learning objectives
