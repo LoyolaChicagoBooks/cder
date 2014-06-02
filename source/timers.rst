@@ -247,28 +247,19 @@ to the adapter.
 
    Countdown timer: autonomous scenario
 
-Testing
--------
+Testing more complex GUI applications
+-------------------------------------
 
-As we develop increasingly complex applications, we increasingly
-benefit from thorough automated testing. We distinguish between our
-application code, usually referred to as the *subject under test*
-(SUT), and the test code. *Test coverage* describes the extent to
-which our test code exercises the SUT, and there are several ways to
-measure test coverage.
+As we develop more complex applications, we increasingly benefit from
+thorough automated testing. In particular, there are different
+structural levels of testing: component-level unit testing,
+integration testing, and system testing.
 
-We also understand that there are different structural levels of
-testing: component-level unit testing, integration testing, and system
-testing. The latter can take place in or outside the presence of the
-target execution environment. By default, Android supports so-called
-instrumentation testing on an emulator or actual device, though other
-types of testing can be achieved with relatively little extra effort.
-
-As our application grows in complexity, so does our test code, so it
-makes sense to use good software engineering practice in the
-development of our test code. Accordingly, software design patterns
-for test code have emerged, such as the *Testclass Superclass* pattern
-[REF] we use in the example below.
+In addition, as our application grows in complexity, so does our test
+code, so it makes sense to use good software engineering practice in
+the development of our test code. Accordingly, software design
+patterns for test code have emerged, such as the *Testclass
+Superclass* pattern [REF] we use in section 2 [REF].
 
 Unit-testing passive model components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -282,10 +273,10 @@ Unit-testing components with autonomous behavior
 
 Testing components with autonomous behavior is more challenging
 because we have to attach some kind of probe to observe the
-behavior. Let's try this on our clock model. 
+behavior. 
 
-The following test verifies that a stopped clock does not emit any
-tick events.
+Let's try this on our clock model. The following test verifies that a
+stopped clock does not emit any tick events.
 
 .. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/test/model/clock/AbstractClockModelTest.java
    :start-after: begin-method-testStopped
@@ -339,8 +330,9 @@ ringing stopped and state is stopped.
    :language: java 
    :linenos:
  
-Note that this happens *in fake time* (fast-forward) because we
-control the rate of the clock ticks.
+Note that this happens *in fake time* (fast-forward) because we can
+make the rate of the clock ticks as fast as the state machine can keep
+up.
 
 .. note:: There are also various mocking frameworks, such as Mockito
 	  and JMockit, which can automatically generate mock objects
@@ -349,15 +341,15 @@ control the rate of the clock ticks.
 	  test expectations.
 
 
-Integration-testing the adapter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Programmatic system testing of the app
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The following is an integration test of the adapter with its real
-dependencies present. It verifies the following scenario *in real
-time*: time is 0, press button five times, expect time 5, wait 3
-seconds, expect time 5, wait 3 more seconds, expect time 2, press
-stopTick button to reset time, expect time 0. (includes all state
-transitions as assertions).
+The following is a system test of the application with all of its real
+component present. It verifies the following scenario *in real time*:
+time is 0, press button five times, expect time 5, wait 3 seconds,
+expect time 5, wait 3 more seconds, expect time 2, press stopTick
+button to reset time, expect time 0. (includes all state transitions
+as assertions).
 
 .. literalinclude:: ../examples/countdowntimer-android-java/Timer/src/main/java/edu/luc/etl/cs313/android/countdowntimer/test/android/AbstractTimerActivityTest.java
    :start-after: begin-method-testScenarioRun2 
@@ -365,3 +357,6 @@ transitions as assertions).
    :language: java 
    :linenos:
 
+As in the previous section [REF], we can run this test as an
+in-container instrumentation test or out-of-container using a
+simulated environment such as Robolectric.

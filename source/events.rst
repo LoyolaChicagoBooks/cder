@@ -362,17 +362,17 @@ Processing events triggered by the user
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Android activity is responsible for mediating between the view
-components and the POJO bounded counter model we saw above. The full
-cycle of each event-based interaction goes like this. By pressing the
-increment button, the user triggers the ``onClick`` event on that
-button, and the ``onIncrement`` method gets called. This method
-interacts with the model instance by invoking the ``increment`` method
-and then requests a view update of the activity itself. The
-corresponding ``updateView`` method also interacts with the model
-instance by retrieving the current counter value using the ``get``
-method, displays this value in the corresponding GUI element with
-unique ID ``textview_value``, and finally updates the view states as
-necessary.
+components and the POJO (plain old Java object) bounded counter model
+we saw above. The full cycle of each event-based interaction goes like
+this. By pressing the increment button, the user triggers the
+``onClick`` event on that button, and the ``onIncrement`` method gets
+called. This method interacts with the model instance by invoking the
+``increment`` method and then requests a view update of the activity
+itself. The corresponding ``updateView`` method also interacts with
+the model instance by retrieving the current counter value using the
+``get`` method, displays this value in the corresponding GUI element
+with unique ID ``textview_value``, and finally updates the view states
+as necessary.
 
 .. literalinclude:: ../examples/clickcounter-android-java/ClickCounter/src/main/java/edu/luc/etl/cs313/android/clickcounter/ClickCounterActivity.java
    :start-after: begin-method-onIncrement
@@ -432,18 +432,29 @@ top half of this architecture.
    flow.
 
 
-Testing GUI applications
-------------------------
+System-testing GUI applications
+-------------------------------
 
-Testing of GUI applications is a broad and important topic that goes
-beyond the scope of this chapter. Here, we complete our running
-example by focus on a few key techniques.
+Automated system testing of entire GUI applications is a broad and
+important topic that goes beyond the scope of this chapter. Here, we
+complete our running example by focusing on a few key concepts and
+techniques.
+
+We distinguish between our application code, usually referred to as
+the *system under test* (SUT), and the test code. *Test coverage*
+describes the extent to which our test code exercises the SUT, and
+there are several ways to measure test coverage. We generally want
+test coverage to be as close to 100% as possible and can measure this
+using suitable tools.
 
 At the beginning of this section, we already saw an example of a
-simple test method for the POJO bounded counter model. Because Android
-view components support triggering events programmatically, we can
-write system-level test methods that mimic the way a human user would
-interact with the application.
+simple component-level unit test method for the POJO bounded counter
+model. Because Android view components support triggering events
+programmatically, we can also write system-level test methods that
+mimic the way a human user would interact with the application.
+
+System-testing the click counter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The following test handles a simple scenario of pressing the reset
 button, verifying that we are in the minimum view state, then pressing
@@ -459,7 +470,8 @@ verifying that we are back in the minimum state.
 
 The next test ensures that the visible application state is preserved
 under device rotation. This is an important and effective test because
-an Android application undergoes its entire lifecycle under rotation.
+an Android application goes through its entire lifecycle under
+rotation.
 
 .. literalinclude:: ../examples/clickcounter-android-java/ClickCounter/src/main/java/edu/luc/etl/cs313/android/clickcounter/AbstractClickCounterActivityTest.java 
    :start-after: begin-method-testActivityScenarioRotation
@@ -467,31 +479,37 @@ an Android application undergoes its entire lifecycle under rotation.
    :language: java 
    :linenos:
 
-Having a modular architecture, such as model-view-adapter, enables us
-to test some of the application components in isolation. Our simple
-unit tests for the POJO bounded counter model still work in the
-context of the overall Android app.
+System testing in and out of container
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The test code itself can benefit from the use of certain design
-patterns. For example, we have two choice for system-testing our app:
+We have two main choices for system-testing our app:
 
-- In-container/instrumentation testing on an actual Android phone or
-  tablet emulator (or physical device) requires deploying the
-  application under test and the test code to the emulator and tends
-  to be quite slow.
+- In-container/instrumentation testing in the presence of the target
+  execution environment, such as an actual Android phone or tablet
+  emulator (or physical device). This requires deploying both the SUT
+  and the test code to the emulator and tends to be quite slow. So
+  far, Android's build tools officially support only this mode.
 
 - Out-of-container testing on the development workstation using a test
   framework such as *Robolectric* that simulates an Android runtime
-  environment tends to be considerably faster.
+  environment tends to be considerably faster. This and other
+  non-instrumentation types of testing can be integrated in the
+  Android build process with a bit of extra effort.
 
-Typically, we will want to run the exact same test logic in both
-cases, starting with the simulated environment and occasionally
-targeting the emulator or device. An effective way to structure our
-test code for this purpose is the xUnit pattern *Testcase
-Superclass*. As the pattern name suggests, we pull up the common test
-code into an abstract superclass, and each of the two concrete test
-classes inherits the common code and runs it in the desired
-environment.
+Although the Android build process does not officially support this or
+other types of non-instrumentation testing, they can be integrated in
+the Android build process with a bit of extra effort.
+ 
+Structuring test code for flexibility and reuse
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typically, we'll want to run the exact same test logic in both cases,
+starting with the simulated environment and occasionally targeting the
+emulator or device. An effective way to structure our test code for
+this purpose is the xUnit pattern *Testcase Superclass*. As the
+pattern name suggests, we pull up the common test code into an
+abstract superclass, and each of the two concrete test classes
+inherits the common code and runs it in the desired environment.
 
 .. code-block:: java
    :linenos:
@@ -525,8 +543,13 @@ tedious when a lot of test methods are involved.
        ...
    }
 
+Having a modular architecture, such as model-view-adapter, enables us
+to test most of the application components in isolation. For example,
+our simple unit tests for the POJO bounded counter model still work in
+the context of the overall Android app.
 
-References: 
+
+.. rubric:: References
 
 - https://www.palantir.com/2009/04/model-view-adapter/
 - https://bitbucket.org/loyolachicagocs_comp313/clickcounter-android-java 
