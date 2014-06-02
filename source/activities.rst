@@ -1,5 +1,5 @@
-Keeping the User Interface Responsive with Background Activities
-================================================================
+Keeping the User Interface Responsive with Asynchronous Activities
+==================================================================
 
 Learning objectives
 -------------------
