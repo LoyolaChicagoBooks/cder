@@ -4,31 +4,16 @@ Basic Event-Based User Interaction
 Learning objectives
 -------------------
 
-.. todo:: streamline these
-
-* Introduction to the Android framework (CS2: K, IOOD: C)
-* User interaction in console applications (CS1: A)
-* User interaction in applications with a graphical interface (GUI) (CS2: A)
-* Modeling simple behaviors with UML State Machine diagrams (IOOD: C) 
-* Understanding user interaction as events
-
-   * GUI widgets as event sources (CS2: C)
-
-   * Event listeners and the Observer pattern (IOOD: A)
-
-   * Single-threaded UI event handling
-
-* The Model-View-Adapter architectural pattern (IOOD: A)
-* Testing interactive applications (IOOD: A)
-* Testing
-
-  - Different types of testing
-
-    - Component-level unit testing
-    - System testing
-    - Instrumentation testing
-
-  - Testcase Superclass pattern
+- User interaction in console applications (C) 
+- User interaction in GUI applications (C)
+- State-dependent behavior and user interaction (C) 
+- Basics of the Android GUI toolkit (A) 
+- Understanding user interaction as events (C) 
+- The Dependency Inversion Principle (C)
+- The Observer design pattern (C) 
+- Modeling simple behaviors with UML State Machine diagrams (A) 
+- The Model-View-Adapter architectural pattern (C) 
+- Testing interactive applications (A) 
 
 Introduction
 ------------
@@ -39,7 +24,7 @@ development framework. Our running example will be a bounded click
 counter application that can be used to keep track of the capacity of,
 say, a movie theater.
 
-This is an example of a section reference :ref:`sec_BoundedCounterAbstraction` (example for K).
+.. This is an example of a section reference :ref:`sec_BoundedCounterAbstraction` (example for K).
 
 .. _sec_BoundedCounterAbstraction:
 
@@ -74,19 +59,16 @@ incrementing the counter works properly:
    :language: java 
    :linenos:
 
-
 In the remainder of this section, we'll put this abstraction to good
 use by building an interactive application on top of it.
 
-The interactive behavior of a click counter device
---------------------------------------------------
-
-.. todo:: use proper requirements terminology
+The functional requirements for click counter device
+----------------------------------------------------
 
 Next, let's imagine a device that realizes this bounded counter
 concept. For example, a bouncer positioned at the door of a movie
-theater to prevent overcrowding, could benefit from such a device with
-the following behavior:
+theater to prevent overcrowding, would require a device with the
+following behavior:
 
 - The device is preconfigured to the capacity of the venue.
 
@@ -221,11 +203,25 @@ state.
 GUI widgets as event sources
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The two figures show the GUI increment button selected in the Android
-Studio view component editor and the corresponding hierarchical tree
-view, respectively. 
+For developing GUI applications, it can be quite convenient to use an
+integrated development environment (IDE) with support for the GUI
+toolkit we are targeting. In the case of Android, owner Google
+provides *Android Studio*, a freely available customized version of
+JetBrains IntelliJIDEA
+(http://developer.android.com/sdk/installing/studio.html).
 
-.. todo:: brief description of Android Studio concepts
+Besides the usual IDE features, such as code comprehension,
+navigation, editing, building, and testing, there is support for the
+visual design of the interface by direct manipulation of components
+such as buttons, labels, text fields, layouts, etc. In Android Studio,
+this includes a view component editor with a graphical view,
+underlying XML source view, and corresponding component tree
+view. There is also an editor for setting a view component's specific
+visual and behavioral properties. 
+
+The two figures [REF] show the GUI increment button selected in the
+Android Studio view component editor and the corresponding
+hierarchical tree view, respectively.
 
 Our next step is to bring the app to life by connecting the visual
 interface with the interactive behavior. For example, when pressing
