@@ -4,36 +4,16 @@ Interactive Behaviors and Implicit Concurrency with Internal Timers
 Learning objectives
 -------------------
 
-.. todo:: streamline these and add Bloom levels
-
-- Modeling
-  - Distinguishing between view states and (behavioral) model states
-- Semantics
-  - Internal events from background timers
-  - Concurrency issues: single-thread rule of accessing/updating the view in the GUI thread
-- Architecture and Design (focus on relevant essentials here)
-  - Distinguishing among dumb, reactive, and autonomous model components
-  - Implementing state-dependent behavior using the State pattern
-  - Command pattern for representing tasks as objects
-  - Façade pattern for hiding complexity in the model from the adapter
-  - Relevant class-level design principles
-     - Dependency Inversion Principle (DIP)
-     - Single Responsibility Principle (SRP)
-     - Interface Segregation Principle (ISP)
-  - Package-level architecture and relevant principles
-     - Dependency graph (see also here)
-     - Stable Dependencies Principle (SDP)
-     - Acyclic Dependencies Principle (ADP)
-  - Architectural journey
-- Testing
-  - Different types of testing
-    - Component-level unit testing
-    - System testing
-    - Instrumentation testing
-    - Mock-based testing
-    - Testcase Superclass pattern
-    - Test coverage
-
+- Internal events from autonomous timer-based behavior (C)
+- Modeling recurring and one-shot timers in UML State Machine diagrams (A) 
+- Modeling execution scenarios with UML Collaboration diagrams (A) 
+- Distinguishing between view states and (behavioral) model states (C) 
+- Implementing state-dependent behavior using the State pattern (A) 
+- Managing complexity in application architecture (C)
+- Distinguishing among passive, reactive, and autonomous model
+  components (C)
+- The Model-View-Adapter pattern with autonomous model behavior (C) 
+- Testing components with autonomous behavior and dependencies (A)
 
 Introduction
 ------------
@@ -45,13 +25,12 @@ and similar scenarios where we want to be notified when a set amount
 of time has elapsed.
 
 
-The interactive behavior of a countdown timer
----------------------------------------------
+The functional requirements for a countdown timer
+-------------------------------------------------
 
-.. todo:: use proper requirements terminology 
-
-Let's start with a fairly abstract description of the countdown
-timer's controls and behavior.
+Let's start with the functional requirements for the countdown timer,
+amounting to a fairly abstract description of its controls and
+behavior.
 
 The timer exposes the following controls:
 
@@ -130,8 +109,6 @@ timer using a UML state machine diagram. As usual, there are various
 ways to do this, and our guiding principle is to keep things simple
 and close to the informal description of the behavior.
 
-.. todo:: UML dependency: brief note and external reference
-
 It is easy to see that we need to represent the current counter
 value. Once we accept this, we really don't need to distinguish
 between the stopped state (with counter value zero) and the counting
@@ -192,6 +169,12 @@ follows:
    :end-before: end-type-ClockListener
    :language: java 
    :linenos:
+
+As we discussed in section [REF: previous section], Android follows an
+event source/listener naming idiom. As our examples illustrate, it is
+straightforward to define custom app-specific events that follow this
+same convention. Our ``ClockListener``, for example, combines two
+kinds of events within a single interface.
 
 Concrete state classes implement the abstract ``TimerState``
 class. The key parts of the state machine implementation follow:
@@ -264,18 +247,28 @@ to the adapter.
 
    Countdown timer: autonomous scenario
 
-
-.. todo:: mention JavaBeans event source/listener patterns  
-
-.. todo:: mention possibility of custom app-specific events
-
-.. todo:: code examples: testing
-
 Testing
 -------
 
-.. todo:: explain testing terminology a bit more: SUT, types of testing, etc.  
+As we develop increasingly complex applications, we increasingly
+benefit from thorough automated testing. We distinguish between our
+application code, usually referred to as the *subject under test*
+(SUT), and the test code. *Test coverage* describes the extent to
+which our test code exercises the SUT, and there are several ways to
+measure test coverage.
 
+We also understand that there are different structural levels of
+testing: component-level unit testing, integration testing, and system
+testing. The latter can take place in or outside the presence of the
+target execution environment. By default, Android supports so-called
+instrumentation testing on an emulator or actual device, though other
+types of testing can be achieved with relatively little extra effort.
+
+As our application grows in complexity, so does our test code, so it
+makes sense to use good software engineering practice in the
+development of our test code. Accordingly, software design patterns
+for test code have emerged, such as the *Testclass Superclass* pattern
+[REF] we use in the example below.
 
 Unit-testing passive model components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -349,7 +342,11 @@ ringing stopped and state is stopped.
 Note that this happens *in fake time* (fast-forward) because we
 control the rate of the clock ticks.
 
-.. todo:: There are also various mocking frameworks. 
+.. note:: There are also various mocking frameworks, such as Mockito
+	  and JMockit, which can automatically generate mock objects
+	  that represent component dependencies from interfaces and
+	  provide APIs or domain-specific languages for specifying
+	  test expectations.
 
 
 Integration-testing the adapter
