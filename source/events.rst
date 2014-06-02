@@ -7,12 +7,13 @@ Learning objectives
 - User interaction in console applications (C) 
 - User interaction in GUI applications (C)
 - State-dependent behavior and user interaction (C) 
-- Basics of the Android GUI toolkit (A) 
+- Basics of the Android GUI framework (A) 
 - Understanding user interaction as events (C) 
-- The Dependency Inversion Principle (C)
+- The Dependency Inversion Principle (DIP) (C)
 - The Observer design pattern (C) 
 - Modeling simple behaviors with UML State Machine diagrams (A) 
-- The Model-View-Adapter architectural pattern (C) 
+- Modeling execution scenarios with UML Sequence diagrams (A) 
+- The Model-View-Adapter (MVA) architectural pattern (C) 
 - Testing interactive applications (A) 
 
 Introduction
@@ -200,12 +201,21 @@ always the case, though, and we will see examples in a later section
 of an application with multiple model states but only a single view
 state.
 
+.. note:: A full introduction to the Unified Modeling Language (UML)
+	  would go far beyond the scope of this chapter. Therefore, we
+	  aim to introduce the key elements of UML needed here in an
+	  informal and pragmatic manner. Various UML resources,
+	  including the official specification, are available at
+	  http://www.uml.org/. Numerous third-party tutorials are
+	  available online and in book form.
+
+
 GUI widgets as event sources
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For developing GUI applications, it can be quite convenient to use an
 integrated development environment (IDE) with support for the GUI
-toolkit we are targeting. In the case of Android, owner Google
+framework we are targeting. In the case of Android, owner Google
 provides *Android Studio*, a freely available customized version of
 JetBrains IntelliJIDEA
 (http://developer.android.com/sdk/installing/studio.html).
@@ -332,6 +342,21 @@ owns the interfaces its listeners must implement.
        public void setOnClickListener(final OnClickListener listener) { ... }
        ...
    }
+
+Android follows an event source/listener naming idiom loosely based on
+the Javabeans specification [REF]. Listeners of, say, the ``onX`` of
+event implement the ``OnXListener`` interface with the ``onX(Source
+source)`` method. Sources of this kind of event implement the
+``setOnXListener`` method. An actual event instance corresponds to an
+invocation of the ``onX`` method with the source component passed as
+the ``source`` argument.
+
+.. note:: Those readers who have worked with GUI framework that
+	  supports multiple listeners, such as Swing, might initially
+	  find it restrictive of Android to allow only one. We'll
+	  leave it as an exercise to figure out which well-known
+	  software design pattern can be used to work around this
+	  restriction.
 
 Processing events triggered by the user
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

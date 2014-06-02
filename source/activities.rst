@@ -14,19 +14,26 @@ Learning objectives
 Introduction
 ------------
 
-The running example for this section is a simple app for checking
+In this section, we'll explore the issues that arise when we use a GUI
+to control long-running, processor-bound activities. In particular,
+we'll want to make sure the GUI stays responsive even in such
+scenarios and the activity supports progress reporting and
+cancelation. Our running example will be a simple app for checking
 whether a number is prime.
+
+The functional requirements for the prime checker app
+-----------------------------------------------------
+
+The functional requirements for this app are as follows: *The app
+allows us to enter a number in a text field. When we press the "check"
+button, the app checks whether the number we entered is prime. When we
+press the "cancel" button, the ongoing check(s) are discontinued.*
 
 .. figure:: images/PrimecheckerAndroid.png
    :alt: Prime checker Android app
    :scale: 50%
 
    Screenshot of an Android app for checking prime numbers
-
-The functional requirements for this app are as follows: *The app
-allows us to enter a number in a text field. When we press the "check"
-button, the app checks whether the number we entered is prime. When we
-press the "cancel" button, the ongoing check(s) are discontinued.*
 
 To check whether a number is prime, we can use this brute-force
 algorithm. 
