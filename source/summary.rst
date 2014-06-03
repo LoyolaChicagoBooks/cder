@@ -10,3 +10,8 @@ concurrency.
 
 
 .. todo:: Key takeaways: derive from stated learning outcomes.
+
+.. rubric:: Acknowledgments
+
+We are grateful to our graduate students Michael Dotson and Audrey
+Redovan for having contributed their countdown timer implementation.
