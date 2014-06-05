@@ -26,9 +26,13 @@ Redovan for having contributed their countdown timer implementation.
    place. (They could also be decentralized but it seems easier to
    avoid duplication in this way.)
 
+.. [Android] Google. 2009-2014. *Android Developer Reference*. http://developer.android.com/develop. 
+
 .. [APPP] Robert C. Martin and Micah Martin. 2006. *Agile Principles, Patterns, and Practices in C# (Robert C. Martin).* Prentice Hall PTR, Upper Saddle River, NJ, USA.
 
-.. [Android] Google. 2009-2014. *Android Developer Reference*. http://developer.android.com/develop.
+.. [Ashton2009] Kevin Ashton. 2009. That 'Internet of Things' Thing. *RFID Journal*, 22. Juli 2009. http://www.rfidjournal.com/articles/view?4986
+
+.. [Christensen2009] Jason H. Christensen. 2009. Using RESTful web-services and cloud computing to create next generation mobile applications. In *Proceedings of the 24th ACM SIGPLAN conference companion on Object oriented programming systems languages and applications* (OOPSLA '09). ACM, New York, NY, USA, 627-634. DOI=10.1145/1639950.1639958 http://doi.acm.org/10.1145/1639950.1639958
 
 .. [CPJ2E] Doug Lea. 1999. *Concurrent Programming in Java. Second Edition: Design Principles and Patterns* (2nd ed.). Addison-Wesley Longman Publishing Co., Inc., Boston, MA, USA.
 

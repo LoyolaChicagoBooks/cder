@@ -138,7 +138,7 @@ concurrency in our system.
 .. note:: Many other GUI toolkits, such as Java Swing, are also based
 	  on a single-threaded design for similar reasons as
 	  Android. There are also single-threaded server designs. The
-	  software design pattern underlying these designs is known as
+	  software design pattern common to these designs is known as
 	  *Reactor* [POSA2].
 
 

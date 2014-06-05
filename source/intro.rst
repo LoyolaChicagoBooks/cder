@@ -6,9 +6,10 @@ user-centric software development angle, focusing on the authors' research and
 experience in concurrency. While the focus of this chapter is largely within
 the device itself, the online source code for our examples goes beyond the on-device
 experience by providing versions that connect to RESTful web services
-(optionally hosted in the cloud). We've deliberately focused this chapter
+(optionally hosted in the cloud) [Christensen2009]_. 
+We've deliberately focused this chapter
 around the on-device experience, consistent with  "mobile first" thinking,
-which more generally is the way the "internet of things" also works. This
+which more generally is the way the "internet of things" also works [Ashton2009]_. This
 thinking results in proper separation of concerns when it comes to the user
 experience, local computation, and remote interactions (mediated using
 web services).
