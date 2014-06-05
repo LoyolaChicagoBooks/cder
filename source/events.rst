@@ -1,3 +1,5 @@
+.. _sec_Events:
+ 
 Basic Event-Based User Interaction
 ==================================
 
@@ -24,10 +26,6 @@ explore how to implement this using the Android mobile application
 development framework [Android]_. Our running example will be a
 bounded click counter application that can be used to keep track of
 the capacity of, say, a movie theater.
-
-.. This is an example of a section reference :ref:`sec_BoundedCounterAbstraction` (example for K).
-
-.. _sec_BoundedCounterAbstraction:
 
 The bounded counter abstraction
 -------------------------------
@@ -119,12 +117,15 @@ mobile software app, so let's focus first on the minimum interface
 elements. In addition, we'll make the design choice that operations
 that would violate the counter's data invariant are disabled.
 
-These decisions lead to the three *view states* shown in the following
-images. Note how the reset button is always enabled, while the
-decrement and increment buttons are disabled in the minimum and
-maximum states, respectively.
-
-See figure :ref:`fig_BoundedCounterViewStateMin` (example for K).
+These decisions lead to the three *view states* for the bounded click
+counter Android app: In the initial (minimum) view state, the
+decrement button is disabled (see figure
+:ref:`fig_BoundedCounterViewStateMin`). In the counting view state of
+the, all buttons are enabled (see figure
+:ref:`fig_BoundedCounterViewStateCounting`). Finally, in the maximum
+view state, the increment button is disabled (see figure
+:ref:`fig_BoundedCounterViewStateMax`; we assume a maximum value of
+10). In our design, the reset button is always enabled.
 
 .. _fig_BoundedCounterViewStateMin:
 
@@ -132,23 +133,24 @@ See figure :ref:`fig_BoundedCounterViewStateMin` (example for K).
    :alt: Bounded Counter Min State
    :scale: 50%
 
-   The initial (minimum) view state of the bounded click counter
-   Android app with the decrement button disabled.
+   Minimum view state
+
+.. _fig_BoundedCounterViewStateCounting:
 
 .. figure:: images/BoundedCounterViewStateCounting.png 
    :alt: Bounded Counter Counting State
    :scale: 50%
 
-   The counting view state of the bounded click counter Android app
-   with all buttons enabled.
+   Counting view state
+
+.. _fig_BoundedCounterViewStateMax:
 
 .. figure:: images/BoundedCounterViewStateMax.png 
    :alt: Bounded Counter Max State
    :scale: 50%
 
-   The maximum view state of the bounded click counter Android app
-   with the increment button disabled (assuming a maximum value of
-   10).
+   Maximum view state
+
 
 Understanding user interaction as events
 ----------------------------------------
@@ -229,9 +231,26 @@ underlying XML source view, and corresponding component tree
 view. There is also an editor for setting a view component's specific
 visual and behavioral properties. 
 
-The two figures [REF] show the GUI increment button selected in the
-Android Studio view component editor and the corresponding
-hierarchical tree view, respectively.
+Figure :ref:`fig_AndroidStudioGUIEditor` shows the visual interface of
+the click counter application in the Android Studio view component
+editor with the increment button selected. Figure :ref:`fig_AndroidStudioComponentTree` shows the corresponding
+hierarchy of view components as a tree.
+
+.. _fig_AndroidStudioGUIEditor:
+
+.. figure:: images/AndroidStudioGUIEditor.png
+   :alt: Android Studio GUI editor
+   :scale: 50%
+
+   Component editor view
+
+.. _fig_AndroidStudioComponentTree:
+
+.. figure:: images/ComponentTree.png
+   :alt: Click Counter View Component Tree
+   :scale: 50%
+
+   Component tree view
 
 Our next step is to bring the app to life by connecting the visual
 interface with the interactive behavior. For example, when pressing
@@ -240,20 +259,6 @@ displayed value to go up by one. In general, the user can trigger
 certain events by interacting with view components and other event
 sources. For example, one can press a button, swiping one's finger
 across the screen, rotate the device, etc.
-
-.. figure:: images/AndroidStudioGUIEditor.png
-   :alt: Android Studio GUI editor
-   :scale: 50%
-
-   The visual interface of the application in the Android Studio view  
-   component editor with the increment button selected.  
-
-.. figure:: images/ComponentTree.png
-   :alt: Click Counter View Component Tree
-   :scale: 50%
-
-   The view component tree of the bounded click counter Android app.
-
 
 Event listeners and the Observer pattern
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

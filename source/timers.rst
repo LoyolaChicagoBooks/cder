@@ -170,7 +170,7 @@ follows:
    :language: java 
    :linenos:
 
-As we discussed in section [REF: previous section], Android follows an
+As we discussed in section :ref:`sec_Events`, Android follows an
 event source/listener naming idiom. As our examples illustrate, it is
 straightforward to define custom app-specific events that follow this
 same convention. Our ``ClockListener``, for example, combines two
@@ -224,10 +224,27 @@ Managing structural complexity
 
 We can again describe the architecture of the countdown timer Android
 app as an instance of the Model-View-Adapter (MVA) architectural
-pattern. In figure [REF], solid arrows represent (synchronous) method
-invocation, and dashed arrows represent (asynchronous) events. Here,
-both the view components and the model's autonomous timer send events
-to the adapter.
+pattern. In figure :ref:`fig_AutonomousModelViewAdapter`, solid arrows
+represent (synchronous) method invocation, and dashed arrows represent
+(asynchronous) events. Here, both the view components and the model's
+autonomous timer send events to the adapter. 
+
+Figures :ref:`fig_CountdownTimerMVACollab1` and
+:ref:`fig_CountdownTimerMVACollab2` illustrate the two main
+interaction scenarios side-by-side. 
+
+The user input scenario illustrates the system's end-to-end response
+to a button press. The internal timeout gets set in response to a
+button press. When the timeout event actually occurs, corresponding to
+an invocation of the `onTimeout` method, the system responds by
+transitioning to the running state.
+
+By contrast, the autonomous scenario shows the system's end-to-end
+response to a recurring internal clock tick, corresponding to an
+invocation of the `onTick` method. When the remaining time reaches
+zero, the system responds by transitioning to the alarm-ringing state.
+
+.. _fig_AutonomousModelViewAdapter:
 
 .. figure:: images/AutonomousModelViewAdapter.png
    :alt: Autonomous Model-View-Adapter Architecture
@@ -235,11 +252,15 @@ to the adapter.
 
    Countdown timer: Model-View-Adapter architecture
 
+.. _fig_CountdownTimerMVACollab1:
+
 .. figure:: images/CountdownTimerMVACollab1.png
    :alt: Countdown Timer MVA Collab Scenario 1
    :scale: 100%
 
    Countdown timer: user input scenario
+
+.. _fig_CountdownTimerMVACollab2:
 
 .. figure:: images/CountdownTimerMVACollab2.png
    :alt: Countdown Timer MVA Collab Scenario 2
@@ -259,13 +280,13 @@ In addition, as our application grows in complexity, so does our test
 code, so it makes sense to use good software engineering practice in
 the development of our test code. Accordingly, software design
 patterns for test code have emerged, such as the *Testclass
-Superclass* pattern [XUnitPatterns] we use in section 2 [REF].
+Superclass* pattern [XUnitPatterns] we use in section :ref:`sec_Events`.
 
 Unit-testing passive model components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
 The time model is simple passive component, so we can test it very
-similarly as the bounded counter model in the previous section [REF].
+similarly as the bounded counter model in section :ref:`sec_Events`.
 
 
 Unit-testing components with autonomous behavior
@@ -357,6 +378,6 @@ as assertions).
    :language: java 
    :linenos:
 
-As in the previous section [REF], we can run this test as an
+As in section :ref:`sec_Events`, we can run this test as an
 in-container instrumentation test or out-of-container using a
 simulated environment such as Robolectric.
