@@ -1,20 +1,21 @@
 Summary
 =================
 
-In this chapter, we have studied parallel and distributed computing
-topics from a user-centric software development angle, focusing on
-concurrency.
-
-
-.. todo:: end of section summaries, Q&A/FAQ, questions to ponder/exercises 
-
-
-.. todo:: Key takeaways: derive from stated learning outcomes.
+In this chapter, we have studied various parallel and distributed
+computing topics from a user-centric software development
+angle. Specifically, in the context of mobile application development,
+we have studied the basic building blocks of interactive applications
+in the form of events, timers, and asynchronous activities, along with
+related software modeling, architecture, and design topics.
 
 The complete source code for the examples from this chapter is
 available from [CS313Ex]_. For further reading on designing concurrent
 object-oriented software, have a look at [HPJPC]_, [CPJ2E]_, and
 [JCP]_.
+
+.. todo:: end of section summaries, Q&A/FAQ, questions to ponder/exercises?
+
+.. todo:: Key takeaways: derive from stated learning outcomes. 
 
 .. rubric:: Acknowledgments
 
