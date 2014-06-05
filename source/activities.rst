@@ -145,6 +145,8 @@ concurrency in our system.
 There are two main approaches to keeping the UI from freezing while a
 long-running activity is going on. 
 
+.. _sec_SingleThreaded:
+
 Breaking up an activity into small units of work
 ------------------------------------------------
 
@@ -265,7 +267,7 @@ experimentation: Typically, it is sufficient to check only every so
 many iterations to ensure that the task can make progress on the
 actual computation. Note how this design decision is closely related
 to the granularity of the units of work in the single-threaded design
-discussed above [REF].
+discussed in :ref:`_sec_SingleThreaded` above.
 
 What remains is to schedule the resulting ``AsyncTask`` on a suitable
 executor object:
