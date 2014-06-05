@@ -139,7 +139,7 @@ concurrency in our system.
 	  on a single-threaded design for similar reasons as
 	  Android. There are also single-threaded server designs. The
 	  software design pattern underlying these designs is known as
-	  *Reactor* [REF: Schmidt].
+	  *Reactor* [POSA2].
 
 
 There are two main approaches to keeping the UI from freezing while a
@@ -279,3 +279,5 @@ executor object:
 This completes the picture of moving long-running activities out of
 the UI thread but in a way that they can still be controlled by the UI
 thread.
+
+

@@ -21,9 +21,9 @@ Introduction
 
 In this section, we'll start with a simple interactive behavior and
 explore how to implement this using the Android mobile application
-development framework. Our running example will be a bounded click
-counter application that can be used to keep track of the capacity of,
-say, a movie theater.
+development framework [Android]_. Our running example will be a
+bounded click counter application that can be used to keep track of
+the capacity of, say, a movie theater.
 
 .. This is an example of a section reference :ref:`sec_BoundedCounterAbstraction` (example for K).
 
@@ -32,7 +32,7 @@ say, a movie theater.
 The bounded counter abstraction
 -------------------------------
 
-A *bounded counter* [REF], the concept underlying this application, is an
+A *bounded counter* [OS]_, the concept underlying this application, is an
 integer counter that is guaranteed to stay between a preconfigured
 minimum and maximum value. This is called the *data invariant* of the
 bounded counter.
@@ -50,7 +50,7 @@ say, the following interface:
    :language: java 
    :linenos:
 
-In following a test-driven mindset [REF], we would test implementations of
+In following a test-driven mindset [TDD]_, we would test implementations of
 this interface using methods such as this one, which ensures that
 incrementing the counter works properly:
 
@@ -133,7 +133,7 @@ See figure :ref:`fig_BoundedCounterViewStateMin` (example for K).
    :scale: 50%
 
    The initial (minimum) view state of the bounded click counter
-   Android [REF] app with the decrement button disabled.
+   Android app with the decrement button disabled.
 
 .. figure:: images/BoundedCounterViewStateCounting.png 
    :alt: Bounded Counter Counting State
@@ -170,7 +170,7 @@ interface:
 
 - Instead of setting a visual display, we'll *modify a counter value*.
 
-After we take this step, we can use a UML state machine diagram [REF]
+After we take this step, we can use a UML state machine diagram [UML]_
 to model the dynamic behavior we described at the beginning of this
 section more formally. Note how the touch buttons correspond to
 *events* (triggers of *transitions*, i.e., arrows) with the matching
@@ -202,11 +202,11 @@ of an application with multiple model states but only a single view
 state.
 
 .. note:: A full introduction to the Unified Modeling Language (UML)
-	  would go far beyond the scope of this chapter. Therefore, we
-	  aim to introduce the key elements of UML needed here in an
-	  informal and pragmatic manner. Various UML resources,
-	  including the official specification, are available at
-	  http://www.uml.org/. Numerous third-party tutorials are
+	  [UML]_ would go far beyond the scope of this
+	  chapter. Therefore, we aim to introduce the key elements of
+	  UML needed here in an informal and pragmatic manner. Various
+	  UML resources, including the official specification, are
+	  available at http://www.uml.org/. Third-party tutorials are
 	  available online and in book form.
 
 
@@ -323,12 +323,12 @@ gets called on each subscribed listener.
 Unlike ordinary method invocations, where the caller knows the
 identity of the callee, the (observable) event source provides a
 general mechanism for subscribing a listener to a source. This
-technique is widely known as the *Observer* design pattern.
+technique is widely known as the *Observer* design pattern [GOF]_.
  
 Many GUI frameworks follow this approach. In Android, for example, the
 general component superclass is ``View``, and there are various types
 of listener interfaces, including ``OnClickListener``. In following
-the *Dependency Inversion Principle (DIP)* [REF], the ``View`` class
+the *Dependency Inversion Principle (DIP)* [APPP]_, the ``View`` class
 owns the interfaces its listeners must implement.
 
 .. code-block:: java
@@ -344,7 +344,7 @@ owns the interfaces its listeners must implement.
    }
 
 Android follows an event source/listener naming idiom loosely based on
-the Javabeans specification [REF]. Listeners of, say, the ``onX`` of
+the Javabeans specification [JavaBeans]_. Listeners of, say, the ``onX`` of
 event implement the ``OnXListener`` interface with the ``onX(Source
 source)`` method. Sources of this kind of event implement the
 ``setOnXListener`` method. An actual event instance corresponds to an
@@ -412,7 +412,7 @@ Application architecture
  
 This overall application architecture, where a component mediates
 between view components and model components, is known as
-*model-view-adapter (MVA)*, where the adapter component mediates all
+*model-view-adapter (MVA)* [MVA]_, where the adapter component mediates all
 interactions between the view and the model. (By contrast, the
 *model-view-controller (MVC)* architecture has a triangular shape and
 allows the model to update the view(s) directly via update events.)
@@ -547,12 +547,3 @@ Having a modular architecture, such as model-view-adapter, enables us
 to test most of the application components in isolation. For example,
 our simple unit tests for the POJO bounded counter model still work in
 the context of the overall Android app.
-
-
-.. rubric:: References
-
-- https://www.palantir.com/2009/04/model-view-adapter/
-- https://bitbucket.org/loyolachicagocs_comp313/clickcounter-android-java 
-- http://xunitpatterns.com/
-- UML
-
