@@ -259,7 +259,7 @@ In addition, as our application grows in complexity, so does our test
 code, so it makes sense to use good software engineering practice in
 the development of our test code. Accordingly, software design
 patterns for test code have emerged, such as the *Testclass
-Superclass* pattern [REF] we use in section 2 [REF].
+Superclass* pattern [XUnitPatterns] we use in section 2 [REF].
 
 Unit-testing passive model components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
