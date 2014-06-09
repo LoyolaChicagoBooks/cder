@@ -1,8 +1,8 @@
 Interactive Behaviors and Implicit Concurrency with Internal Timers
-===================================================================
+-------------------------------------------------------------------------------------
 
 Learning objectives
--------------------
+````````````````````````````````````````````````
 
 - Internal events from autonomous timer-based behavior (C)
 - Modeling recurring and one-shot timers in UML State Machine diagrams (A) 
@@ -16,7 +16,7 @@ Learning objectives
 - Testing components with autonomous behavior and dependencies (A)
 
 Introduction
-------------
+````````````````````````````````````````````````
 
 In this section, we'll study an application that has richer,
 timer-based behaviors compared to the click counter example from the
@@ -26,7 +26,7 @@ of time has elapsed.
 
 
 The functional requirements for a countdown timer
--------------------------------------------------
+````````````````````````````````````````````````````
 
 Let's start with the functional requirements for the countdown timer,
 amounting to a fairly abstract description of its controls and
@@ -60,7 +60,7 @@ The timer behaves as follows:
 
 
 A graphical user interface (GUI) for a countdown timer
-------------------------------------------------------
+```````````````````````````````````````````````````````````
 
 Our next step is to flesh out the GUI for our timer. For usability,
 we'll label the multifunction button with its current function. We'll
@@ -96,7 +96,7 @@ ultimately reach the alarm state.
 
 
 Modeling the interactive behavior
----------------------------------
+````````````````````````````````````````````````
 
 .. figure:: images/CountdownTimerStates.png
    :alt: Countdown Timer FSM
@@ -131,7 +131,7 @@ Note that there are two types of (internal) timers at work here:
  
 
 Implementing time-based autonomous behavior
--------------------------------------------
+````````````````````````````````````````````````
 
 While the entirely passive bounded counter behavior from the previous
 section was straightforward to implement, the countdown timer includes
@@ -220,7 +220,7 @@ transition to the stopped state.
    :linenos:
  
 Managing structural complexity
-------------------------------
+````````````````````````````````````````````````
 
 We can again describe the architecture of the countdown timer Android
 app as an instance of the Model-View-Adapter (MVA) architectural
@@ -269,7 +269,7 @@ zero, the system responds by transitioning to the alarm-ringing state.
    Countdown timer: autonomous scenario
 
 Testing more complex GUI applications
--------------------------------------
+````````````````````````````````````````````````
 
 As we develop more complex applications, we increasingly benefit from
 thorough automated testing. In particular, there are different
