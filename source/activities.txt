@@ -1,8 +1,8 @@
 Keeping the User Interface Responsive with Asynchronous Activities
-==================================================================
+-------------------------------------------------------------------------------------
 
 Learning objectives
--------------------
+````````````````````````````````````````````````
 
 - Designing responsive interactive applications (A)
 - Design choices for user interface toolkits such as Android (C)
@@ -12,7 +12,7 @@ Learning objectives
 - Responding to cancelation requests (A)
 
 Introduction
-------------
+````````````````````````````````````````````````
 
 In this section, we'll explore the issues that arise when we use a GUI
 to control long-running, processor-bound activities. In particular,
@@ -22,7 +22,7 @@ cancelation. Our running example will be a simple app for checking
 whether a number is prime.
 
 The functional requirements for the prime checker app
------------------------------------------------------
+``````````````````````````````````````````````````````````
 
 The functional requirements for this app are as follows: *The app
 allows us to enter a number in a text field. When we press the "check"
@@ -60,7 +60,7 @@ processor-bound activities to the background (or remote servers).
 
 
 The problem with foreground tasks
----------------------------------
+````````````````````````````````````````````````
 
 As a first attempt, we now can run the ``isPrime`` method from within
 our event listener in the current thread of execution (the main GUI
@@ -82,7 +82,7 @@ button. There is no progress reporting either: The progress bar jumps
 from zero to 100 when the check finishes.
 
 The single-threaded user interface model
-----------------------------------------
+````````````````````````````````````````````````
 
 The behavior we are observing is a consequence of Android's design
 decision to keep the user interface single-threaded. In this design,
@@ -148,7 +148,7 @@ long-running activity is going on.
 .. _sec_SingleThreaded:
 
 Breaking up an activity into small units of work
-------------------------------------------------
+````````````````````````````````````````````````
 
 The first approach is still single-threaded: We break up the
 long-running activity into very small units of work to be executed
@@ -181,7 +181,7 @@ responsive:
 
 
 Asynchronous tasks to the rescue
---------------------------------
+````````````````````````````````````````````````
 
 The second approach is typically multi-threaded: We represent the
 entire activity as a separate asynchronous task. Because this is such
@@ -228,7 +228,7 @@ following lifecycle:
      background task finishes.
 
 Using ``AsyncTask`` in the prime number checker
------------------------------------------------
+````````````````````````````````````````````````
 
 We set up the corresponding asynchronous task with an input of type
 ``Long``, progress of type ``Integer``, and result of type

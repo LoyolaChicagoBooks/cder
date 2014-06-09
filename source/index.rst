@@ -9,12 +9,7 @@ Welcome to SphinxBootstrapExemplar's documentation!
 .. toctree::
    :maxdepth: 2
 
-   intro
-   events
-   timers
-   activities
-   summary
-
+   chapter
 
 Indices and tables
 ==================

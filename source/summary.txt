@@ -1,5 +1,5 @@
 Summary
-=================
+-------------------------------------------------------------------------------------
 
 In this chapter, we have studied various parallel and distributed
 computing topics from a user-centric software development

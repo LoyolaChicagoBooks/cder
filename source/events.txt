@@ -1,10 +1,10 @@
 .. _sec_Events:
  
 Basic Event-Based User Interaction
-==================================
+-------------------------------------------------------------------------------------
 
 Learning objectives
--------------------
+````````````````````````````````````````````````
 
 - User interaction in console applications (C) 
 - User interaction in GUI applications (C)
@@ -19,7 +19,7 @@ Learning objectives
 - Testing interactive applications (A) 
 
 Introduction
-------------
+````````````````````````````````````````````````
 
 In this section, we'll start with a simple interactive behavior and
 explore how to implement this using the Android mobile application
@@ -28,7 +28,7 @@ bounded click counter application that can be used to keep track of
 the capacity of, say, a movie theater.
 
 The bounded counter abstraction
--------------------------------
+````````````````````````````````````````````````
 
 A *bounded counter* [OS]_, the concept underlying this application, is an
 integer counter that is guaranteed to stay between a preconfigured
@@ -62,7 +62,7 @@ In the remainder of this section, we'll put this abstraction to good
 use by building an interactive application on top of it.
 
 The functional requirements for click counter device
-----------------------------------------------------
+``````````````````````````````````````````````````````````
 
 Next, let's imagine a device that realizes this bounded counter
 concept. For example, a bouncer positioned at the door of a movie
@@ -91,7 +91,7 @@ following behavior:
   to zero.
 
 A simple graphical user interface (GUI) for a click counter
------------------------------------------------------------
+```````````````````````````````````````````````````````````````
 
 Let's now flesh out the user interface of this click counter
 device. In the case of a dedicated hardware device, the interface
@@ -153,7 +153,7 @@ view state, the increment button is disabled (see figure
 
 
 Understanding user interaction as events
-----------------------------------------
+````````````````````````````````````````````````
 
 It was fairly easy to express the familiar bounded counter abstraction
 and to envision a possible user interface for putting this abstraction
@@ -413,7 +413,7 @@ keeps the programming model simple and avoids problems such as race
 conditions or deadlocks that can arise in multithreaded approaches.
 
 Application architecture  
-------------------------
+````````````````````````````````````````````````
  
 This overall application architecture, where a component mediates
 between view components and model components, is known as
@@ -438,7 +438,7 @@ top half of this architecture.
 
 
 System-testing GUI applications
--------------------------------
+````````````````````````````````````````````````
 
 Automated system testing of entire GUI applications is a broad and
 important topic that goes beyond the scope of this chapter. Here, we
