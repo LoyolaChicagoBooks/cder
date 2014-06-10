@@ -10,11 +10,3 @@ Welcome to SphinxBootstrapExemplar's documentation!
    :maxdepth: 2
 
    chapter
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
