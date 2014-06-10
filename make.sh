@@ -14,3 +14,4 @@ fi
 
 make html
 make latexpdf
+make epub
