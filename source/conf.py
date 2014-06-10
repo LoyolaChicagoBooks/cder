@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# CDER documentation build configuration file, created by
+# Concurrency: A User-Centric Approach build configuration file, created by
 # sphinx-quickstart on Fri Nov 22 21:09:52 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -227,15 +227,16 @@ latex_elements = {
 #'pointsize': '10pt',
 
 # Additional stuff for the LaTeX preamble.
- 'preamble': """
-    \setcounter{secnumdepth}{1}
-  """,
+ 'preamble': r"""
+%\usepackage[papersize={7in,9.25in}]{geometry}
+\setcounter{secnumdepth}{1}
+""",
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'cder.tex', u'CDER Documentation',
+  ('index', 'cder.tex', u'Concurrency: A User-Centric Approach',
    u'Konstantin Läufer and George K. Thiruvathukal', 'manual'),
 ]
 
@@ -279,7 +280,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'CDER', u'CDER Documentation',
+  ('index', 'CDER', u'Concurrency: A User-Centric Approach',
    u'Konstantin Läufer and George K. Thiruvathukal', 'CDER', 'One line description of project.',
    'Miscellaneous'),
 ]

@@ -1,5 +1,5 @@
-Title of Chapter
-===============================
+Concurrency: A User-Centric Approach
+=======================================
 
 
 .. include:: intro.txt
