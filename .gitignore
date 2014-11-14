@@ -1,0 +1,8 @@
+Thumbs.db
+.DS_Store
+obj/
+build/
+examples/
+*~
+\#*\#
+*.bak
