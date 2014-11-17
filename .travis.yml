@@ -1,0 +1,9 @@
+language: python
+python:
+  - "2.7"
+  - "3.4"
+install:
+  - sh scripts/install-texlive.sh
+  - sh scripts/install-pip.sh
+script:
+  - sh fullmake.sh
